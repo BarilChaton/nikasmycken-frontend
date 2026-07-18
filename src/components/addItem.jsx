@@ -153,12 +153,15 @@ const AddItem = ({ setCurrentPage }) => {
 
       {/* Form */}
       <div className='mt-5 flex flex-col gap-4'>
-        <input 
-          value={title} 
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder='Item title'
-          className='input-style'
-        />
+        <div className='flex flex-col gap-1'>
+          <label className="pl-1 text-sm font-medium text-white/80">Item title</label>
+          <input 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder='Item title'
+            className='input-style'
+          />
+        </div>
 
         <select 
           value={category}
@@ -172,45 +175,61 @@ const AddItem = ({ setCurrentPage }) => {
         </select>
 
         <div className='grid grid-cols-2 gap-4'>
-          <input 
-            type="number" 
-            value={purchasePrice}
-            onChange={(e) => setPurchasePrice(e.target.value)}
-            placeholder='Purchase price'
-            className='input-style'
-          />
-          <input 
-            type="number" 
-            value={listingPrice}
-            onChange={(e) => setListingPrice(e.target.value)}
-            placeholder='Listing price'
-            className='input-style'
-          />
-          <input 
-            type="number" 
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder='Amount'
-            className='input-style'
-          />
-          <input 
-            type="number" 
-            value={sold}
-            onChange={(e) => setSold(e.target.value)}
-            placeholder='Amount sold'
-            className='input-style'
-          />
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Purchase price</label>
+            <input 
+              type="number" 
+              value={purchasePrice}
+              onChange={(e) => setPurchasePrice(e.target.value)}
+              placeholder='Purchase price'
+              className='input-style'
+            />
+          </div>
 
-          <select 
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className='input-style'
-            placeholder='Status'
-          >
-            <option>Unlisted</option>
-            <option>Listed</option>
-            <option>Out of Stock</option>
-          </select>
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Listing price</label>
+            <input 
+              type="number" 
+              value={listingPrice}
+              onChange={(e) => setListingPrice(e.target.value)}
+              placeholder='Listing price'
+              className='input-style'
+            />
+          </div>
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Amount</label>
+            <input 
+              type="number" 
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder='Amount'
+              className='input-style'
+            />
+          </div>
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Amount sold</label>
+            <input 
+              type="number" 
+              value={sold}
+              onChange={(e) => setSold(e.target.value)}
+              placeholder='Amount sold'
+              className='input-style'
+            />
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Status</label>
+            <select 
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className='input-style'
+              placeholder='Status'
+            >
+              <option>Unlisted</option>
+              <option>Listed</option>
+              <option>Out of Stock</option>
+            </select>
+          </div>
 
           <button
             onClick={saveItem}
