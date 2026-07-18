@@ -1,12 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FiArrowLeft, FiTrash2 } from 'react-icons/fi'
 import { client } from '../../client'
+import { itemDetailsQuery } from '../../utils/queries'
 import ImageGallery from './imageGallery'
 import InfoCard from './infoCard'
 import PriceCard from './priceCard'
 
-const ItemDetails = ({ item, setCurrentPage }) => {
+const ItemDetails = ({ item, setCurrentPage, setSelectedItem }) => {
+  const [details, setDetails] = useState(null)
   const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const data = await client.fetch(
+          itemDetailsQuery(item._id)
+        )
+
+        setDetails(data)
+      } catch(error) {
+        console.error(
+          "Failed fetching item details:",
+          error
+        )
+      }
+    }
+
+    if (item) {
+      fetchItem()
+    }
+  }, [item])
 
   if (!item) {
     return (
@@ -46,21 +69,27 @@ const ItemDetails = ({ item, setCurrentPage }) => {
       </div>
 
       {/* Image Gallery */}
-      <ImageGallery item={item}/>
+      {details && <ImageGallery item={details}/>}
 
       {/* Information */}
       <div className="mt-5">
-        <InfoCard item={item} />
+        {details && <InfoCard item={details} />}
       </div>
 
       {/* Prices */}
       <div className="mt-5">
-        <PriceCard item={item} />
+        {details && <PriceCard item={details} />}
       </div>
 
       {/* Actions */}
       <div className="mt-6 flex flex-col gap-3">
-        <button className="rounded-xl bg-white py-3 font-bold text-sky-800">Edit Item</button>
+        <button 
+          onClick={() => {
+            setSelectedItem(details)
+            setCurrentPage('edit')
+          }}
+          className="rounded-xl bg-white py-3 font-bold text-sky-800"
+        >Edit Item</button>
         <button 
           onClick={deleteItem}
           disabled={deleting}

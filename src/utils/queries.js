@@ -58,3 +58,24 @@ export const dashboardQuery = `
     amount
   }
 `
+
+export const itemDetailsQuery = (id) => `
+  *[_type == "inventoryItem" && _id == "${id}"][0]{
+    _id,
+    title,
+    category,
+    purchasePrice,
+    listingPrice,
+    amount,
+    amountSold,
+    status,
+  
+    photos[]{
+      _key,
+      asset->{
+        _id,
+        url
+      }
+    }
+  }
+`
