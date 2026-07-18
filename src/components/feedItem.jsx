@@ -7,9 +7,7 @@ const STATUS_COLORS = {
 }
 
 const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
-  console.log(item.status);
   const sold = item.status === 'Out of Stock' ? 'Sold' : item.status
-  
 
   return (
     <div 
