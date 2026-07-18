@@ -215,7 +215,7 @@ const EditItem = ({ item, setCurrentPage }) => {
         >
           <option>Unlisted</option>
           <option>Listed</option>
-          <option>Sold</option>
+          <option>Out of Stock</option>
         </select>
 
         <button

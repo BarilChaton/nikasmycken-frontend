@@ -3,10 +3,13 @@ import { FaBoxes, FaCoins } from "react-icons/fa"
 const STATUS_COLORS = {
   Listed: "bg-emerald-500",
   Unlisted: "bg-amber-500",
-  Sold: "bg-gray-500"
+  Sold: "bg-red-500"
 }
 
 const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
+  console.log(item.status);
+  const sold = item.status === 'Out of Stock' ? 'Sold' : item.status
+  
 
   return (
     <div 
@@ -29,7 +32,7 @@ const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
             <p className="text-sm">Category: <span className="font-bold">{item.category}</span></p>
             <div className="flex flex-row gap-1">
               <p>Status: </p>
-              <span className={`rounded-full px-2 py-1 text-xs ${STATUS_COLORS[item.status]}`}>{item.status}</span>
+              <span className={`rounded-full px-2 py-1 text-xs ${STATUS_COLORS[sold]}`}>{item.status}</span>
             </div>
           </div>
         </div>
