@@ -1,0 +1,20 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Dark Mode */
+.darkModePrimaryBg {
+  background-color: #053d3d;
+}
+
+/* Light Mode */
+.lightModePrimaryBg {
+  background-color: #0d5f8f;
+}
+
+@layer components {
+  .input-style {
+    @apply rounded-xl bg-white/10 px-4 py-3 text-white placeholder:text-white/50 outline-none;
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">nikasmycken-dashboard</string>
+    <string name="title_activity_main">nikasmycken-dashboard</string>
+    <string name="package_name">com.nikasmycken.app</string>
+    <string name="custom_url_scheme">com.nikasmycken.app</string>
+</resources>

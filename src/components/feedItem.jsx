@@ -1,0 +1,47 @@
+import { FaBoxes, FaCoins } from "react-icons/fa"
+
+const FeedItem = ({ item }) => {
+  const statusColors = {
+    listed: "bg-emerald-600",
+    unlisted: "bg-amber-500",
+    sold: "bg-gray-600"
+  }
+
+  return (
+    <div className="flex gap-2 rounded-2xl bg-white/10 p-2 shadow-md text-white landscape:w-1/2">
+      <img
+        src={item.image}
+        alt={item.title}
+        className="w-24 h-24 rounded-xl object-cover"
+      />
+      <div className="flex flex-1 flex-col justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">{item.title}</h2>
+
+          <div className="flex flex-row justify-between">
+            <p className="text-sm">Category: <span className="font-bold">{item.category}</span></p>
+            <div className="flex flex-row gap-1">
+              <p>Status: </p>
+              <span className={`rounded-full px-2 py-1 text-xs ${statusColors[item.status]}`}>{item.status}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-row justify-between">
+          <div className="flex items-center gap-1 justify-between text-sm">
+            <FaCoins />
+            <p>Price: </p>
+            <span className="font-semibold">{item.listingPrice} kr</span>
+          </div>
+
+          <div className="flex items-center gap-1 text-sm">
+            <FaBoxes />
+            <span>Qty: {item.amount}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default FeedItem
