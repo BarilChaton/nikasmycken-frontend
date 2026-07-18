@@ -8,8 +8,16 @@ export const feedQuery = `*[_type == "inventoryItem"] | order(_createdAt desc) {
     listingPrice,
     status,
     amount,
+    amountSold,
 
     "image": photos[0].asset->url,
+
+    photos[]{
+      _key,
+      asset->{
+        url
+      }
+    },
 
     _createdAt
   } `

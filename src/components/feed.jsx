@@ -4,7 +4,7 @@ import { feedQuery } from '../utils/queries'
 import Spinner from './spinner'
 import FeedItem from './feedItem'
 
-const Feed = () => {
+const Feed = ({setCurrentPage, setSelectedItem}) => {
   const [items, setItems] = useState()
   const [loading, setLoading] = useState(true)
 
@@ -38,6 +38,8 @@ const Feed = () => {
           <FeedItem
             key={item._id}
             item={item}
+            setCurrentPage={setCurrentPage} 
+            setSelectedItem={setSelectedItem}
           />
         ))}
       </div>

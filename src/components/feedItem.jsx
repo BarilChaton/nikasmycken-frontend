@@ -1,6 +1,6 @@
 import { FaBoxes, FaCoins } from "react-icons/fa"
 
-const FeedItem = ({ item }) => {
+const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
   const statusColors = {
     listed: "bg-emerald-600",
     unlisted: "bg-amber-500",
@@ -8,7 +8,13 @@ const FeedItem = ({ item }) => {
   }
 
   return (
-    <div className="flex gap-2 rounded-2xl bg-white/10 p-2 shadow-md text-white landscape:w-1/2">
+    <div 
+      onClick={() => {
+        setSelectedItem(item)
+        setCurrentPage('details')
+      }}
+      className="cursor-pointer flex gap-2 rounded-2xl bg-white/10 p-2 shadow-md text-white landscape:w-1/2"
+    >
       <img
         src={item.image}
         alt={item.title}
