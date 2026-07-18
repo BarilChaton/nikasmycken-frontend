@@ -1,15 +1,34 @@
-import { FiArrowLeft } from 'react-icons/fi'
+import { useState } from 'react'
+import { FiArrowLeft, FiTrash2 } from 'react-icons/fi'
+import { client } from '../../client'
 import ImageGallery from './imageGallery'
 import InfoCard from './infoCard'
 import PriceCard from './priceCard'
 
 const ItemDetails = ({ item, setCurrentPage }) => {
+  const [deleting, setDeleting] = useState(false)
+
   if (!item) {
     return (
       <div className='flex h-full items-center justify-center text-white'>
         No item selected
       </div>
     )
+  }
+
+  const deleteItem = async () => {
+    const confirmed = window.confirm(`Are you sure you want to delete "${item.title}"?`)
+    if (!confirmed) return
+
+    try {
+      setDeleting(true)
+      await client.delete(item._id)
+      setCurrentPage('home')
+    } catch(error) {
+      console.error('Failed to delete item: ', error)
+    } finally {
+      setDeleting(false)
+    }
   }
 
   return (
@@ -42,7 +61,14 @@ const ItemDetails = ({ item, setCurrentPage }) => {
       {/* Actions */}
       <div className="mt-6 flex flex-col gap-3">
         <button className="rounded-xl bg-white py-3 font-bold text-sky-800">Edit Item</button>
-        <button className="rounded-xl bg-red-500 py-3 font-bold text-white">Delete Item</button>
+        <button 
+          onClick={deleteItem}
+          disabled={deleting}
+          className="flex items-center justify-center gap-2 rounded-xl bg-red-500 py-3 font-bold text-white disabled:opacity-50"
+        >
+          <FiTrash2 />
+          {deleting ? 'Deleting...' : 'Delete Item'}
+        </button>
       </div>
     </div>
   )
