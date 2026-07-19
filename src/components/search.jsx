@@ -6,7 +6,7 @@ import { feedQuery } from '../utils/queries'
 import Spinner from './spinner'
 import FeedItem from './feedItem'
 
-const Search = ({ setCurrentPage, setSelectedItem }) => {
+const Search = ({ setCurrentPage, setSelectedItem, user }) => {  
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -17,7 +17,7 @@ const Search = ({ setCurrentPage, setSelectedItem }) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery)
+        const data = await client.fetch(feedQuery, {userId: user.uid})
         setItems(data)
       } catch (error) {
         console.error(error)
@@ -26,8 +26,10 @@ const Search = ({ setCurrentPage, setSelectedItem }) => {
       }
     }
 
-    fetchItems()
-  }, [])
+    if (user.uid) {
+      fetchItems()
+    }
+  }, [user.uid])
 
   const categories = useMemo(() => {
     return ['All', ...new Set(items.map(item => item.category?.name).filter(Boolean))]

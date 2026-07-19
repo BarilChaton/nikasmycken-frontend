@@ -8,14 +8,14 @@ import CategoryBreakdown from './categoryBreakdown'
 import StatusBreakdown from './statusBreakdown'
 import TopItems from './topItems'
 
-const Statistics = ({setCurrentPage, setSelectedItem}) => {
+const Statistics = ({setCurrentPage, setSelectedItem, user}) => {  
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery)
+        const data = await client.fetch(feedQuery, {userId: user.uid})
         setItems(data)
       } catch (error) {
         console.error('Failed loading statistics:', error)
@@ -24,8 +24,10 @@ const Statistics = ({setCurrentPage, setSelectedItem}) => {
       }
     }
 
-    fetchItems()
-  }, [])
+    if (user.uid) {
+      fetchItems()
+    }
+  }, [user.uid])
 
   if (loading) {
     return <Spinner message="Loading statistics..." />

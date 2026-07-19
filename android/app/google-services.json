@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "644958193282",
+    "project_id": "nikasmycken-dashboard",
+    "storage_bucket": "nikasmycken-dashboard.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644958193282:android:bbf2a9efc88c1b4eb5d69b",
+        "android_client_info": {
+          "package_name": "com.nikasmycken.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644958193282-sf9c209k2uga5k18k9oe3mm4jm1ghalg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nikasmycken.app",
+            "certificate_hash": "5056eaf6067aca04512d45cb898ed89a6810a0db"
+          }
+        },
+        {
+          "client_id": "644958193282-jf6mimj5a983su80nhods4uas2q7aoon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARj_NbCLXha4Lozbtw9dlaG2OPozUt6y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644958193282-b12mhm0lnh0bdltqgi0ilo1ngpi5s3sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

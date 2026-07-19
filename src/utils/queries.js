@@ -1,4 +1,4 @@
-export const feedQuery = `*[_type == "inventoryItem"] | order(_createdAt desc) {
+export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(_createdAt desc) {
     _id,
     inventoryId,
     title,
@@ -30,7 +30,7 @@ export const feedQuery = `*[_type == "inventoryItem"] | order(_createdAt desc) {
 export const searchQuery = (searchTerm) => {
   const query = `
     *[
-      _type == "inventoryItem" &&
+      _type == "inventoryItem" && 
       (
         title match "${searchTerm}*" ||
         category match "${searchTerm}*" ||
@@ -57,7 +57,7 @@ export const searchQuery = (searchTerm) => {
 }
 
 export const dashboardQuery = `
-  *[_type == "inventoryItem"]{
+  *[_type == "inventoryItem" && ownerId==$userId]{
     status,
     listingPrice,
     amount
@@ -91,7 +91,7 @@ export const itemDetailsQuery = (id) => `
 `
 
 export const categoriesQuery = `
-  *[_type == "category"] | order(name asc){
+  *[_type == "category" && ownerId==$userId] | order(name asc){
       _id,
       name,
       subcategories[]{

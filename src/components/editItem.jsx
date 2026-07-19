@@ -4,7 +4,7 @@ import { categoriesQuery } from '../utils/queries'
 import { FiArrowLeft } from 'react-icons/fi'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 
-const EditItem = ({ item, setCurrentPage }) => {
+const EditItem = ({ item, setCurrentPage, user }) => {  
   const [title, setTitle] = useState(item.title)
   const [categories, setCategories] = useState([])
   const [categoryId, setCategoryId] = useState(item.category?._id || '')
@@ -21,12 +21,12 @@ const EditItem = ({ item, setCurrentPage }) => {
   const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
-    client.fetch(categoriesQuery)
+    client.fetch(categoriesQuery, {userId: user.uid})
       .then(setCategories)
       .catch(error =>
         console.error("Failed loading categories:", error)
       )
-  }, [])
+  }, [user.uid])
 
   const selectedCategory = categories.find(category => category._id === categoryId)
 
@@ -109,6 +109,7 @@ const EditItem = ({ item, setCurrentPage }) => {
             _ref: categoryId
           },
           subcategoryKey,
+          ownerId: user.uid,
           purchasePrice: Number(purchasePrice),
           listingPrice: Number(listingPrice),
           amount: Number(amount),

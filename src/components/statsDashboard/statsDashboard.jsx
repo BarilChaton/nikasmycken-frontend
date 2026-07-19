@@ -4,8 +4,7 @@ import { client } from "../../client"
 import { dashboardQuery } from "../../utils/queries"
 import StatsCard from "./statsCard"
 
-const StatsDashboard = () => {
-
+const StatsDashboard = ({user}) => {
   const [stats, setStats] = useState({
     totalItems: 0,
     listedItems: 0,
@@ -16,7 +15,7 @@ const StatsDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await client.fetch(dashboardQuery)
+        const data = await client.fetch(dashboardQuery, {userId: user.uid})
         const totalItems = data.length
         const listedItems = data.filter(item => item.status === 'listed').legnth || 0
         const totalValue = data.reduce((sum, item) => sum + ((item.listingPrice || 0) * (item.amount || 0)), 0)
@@ -33,8 +32,10 @@ const StatsDashboard = () => {
       }
     }
 
-    fetchStats()
-  }, [])
+    if (user.uid) {
+      fetchStats()
+    }
+  }, [user.uid])
 
   return (
     <div className="w-full px-5 grid grid-cols-2 landscape:grid-cols-4 gap-4">

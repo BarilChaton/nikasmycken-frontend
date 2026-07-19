@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState } from 'react'
 import { client } from '../../client'
@@ -5,7 +6,7 @@ import { categoriesQuery } from '../../utils/queries'
 import { v4 as uuidv4 } from 'uuid'
 import { FiPlus, FiTrash2 } from 'react-icons/fi'
 
-const CategoryManager = () => {
+const CategoryManager = ({user}) => {
   const [categories, setCategories] = useState([])
   const [newCategory, setNewCategory] = useState('')
   const [newSubcategory, setNewSubcategory] = useState('')
@@ -14,7 +15,7 @@ const CategoryManager = () => {
 
   const loadCategories = async () => {
     try {
-      const data = await client.fetch(categoriesQuery)
+      const data = await client.fetch(categoriesQuery, {userId: user.uid})
       setCategories(data)
     } catch(error) {
       console.error('Failed loading categories: ', error)
@@ -28,7 +29,8 @@ const CategoryManager = () => {
       await client.create({
         _type: 'category',
         name: newCategory,
-        subcategories: []
+        subcategories: [],
+        ownerId: user.uid
       })
 
       setNewCategory('')
@@ -90,9 +92,11 @@ const CategoryManager = () => {
     }
   }
   
-  useEffect(() => {
+useEffect(() => {
+  if (user) {
     loadCategories()
-  }, [])
+  }
+}, [user])
   
   return (
   <div className="space-y-4">

@@ -6,7 +6,7 @@ import ImageGallery from './imageGallery'
 import InfoCard from './infoCard'
 import PriceCard from './priceCard'
 
-const ItemDetails = ({ item, setCurrentPage, setSelectedItem }) => {
+const ItemDetails = ({ item, setCurrentPage, setSelectedItem, user }) => {
   const [details, setDetails] = useState(null)
   const [deleting, setDeleting] = useState(false)
 

@@ -13,5 +13,5 @@ export const getGreeting = () => {
     return "Good evening"
   }
 
-  return "Idź spać"
+  return "Time for bed"
 }

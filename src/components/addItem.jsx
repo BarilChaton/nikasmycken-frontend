@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { v4 as uuidv4 } from 'uuid'
 import { useState, useEffect } from 'react'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
@@ -5,7 +6,7 @@ import { client } from '../client'
 import { categoriesQuery } from '../utils/queries'
 import Spinner from './Spinner'
 
-const AddItem = ({ setCurrentPage }) => {
+const AddItem = ({ setCurrentPage, user }) => {
   const [categories, setCategories] = useState([])
 
   const [title, setTitle] = useState('')
@@ -24,7 +25,7 @@ const AddItem = ({ setCurrentPage }) => {
   const [fields, setFields] = useState(false)
 
   useEffect(() => {
-    client.fetch(categoriesQuery).then(setCategories)
+    client.fetch(categoriesQuery, {userId: user.uid}).then(setCategories)
   }, [])
 
   const selectedCategory = categories.find(c => c._id === categoryId)
@@ -84,6 +85,7 @@ const AddItem = ({ setCurrentPage }) => {
         _ref: categoryId
       },
       subcategoryKey,
+      ownerId: user.uid,
       purchasePrice: Number(purchasePrice),
       listingPrice: Number(listingPrice),
       status,
