@@ -28,7 +28,7 @@ const TopItems = ({ items, setCurrentPage, setSelectedItem }) => {
 
             <div className="flex-1 overflow-hidden">
               <h3 className="truncate font-semibold text-white">{item.title}</h3>
-              <p className="text-sm text-sky-100">{item.category}</p>
+              <p className="text-sm text-sky-100">{item.category.name}</p>
             </div>
 
             <div className="text-right">

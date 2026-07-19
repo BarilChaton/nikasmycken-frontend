@@ -30,20 +30,20 @@ const Search = ({ setCurrentPage, setSelectedItem }) => {
   }, [])
 
   const categories = useMemo(() => {
-    return [
-      'All',
-      ...new Set(
-        items.map(item => item.category).filter(Boolean)
-      )
-    ]
+    return ['All', ...new Set(items.map(item => item.category?.name).filter(Boolean))]
   }, [items])
 
   const filteredItems = useMemo(() => {
     return items.filter(item => {
       const search = searchText.toLowerCase()
+      const categoryName = item.category?.name || ""
+      const subcategoryName = item.category?.subcategories?.find(sub => sub._key === item.subcategoryKey)?.name || ""
 
-      const matchesSearch = item.title.toLowerCase().includes(search) || item.category.toLowerCase().includes(search)
-      const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory
+      const matchesSearch = item.title.toLowerCase().includes(search) ||
+       categoryName.toLowerCase().includes(search) ||
+       subcategoryName.toLowerCase().includes(search)
+
+      const matchesCategory = selectedCategory === 'All' || categoryName === selectedCategory
       const matchesStatus = selectedStatus === 'All' || item.status === selectedStatus
 
       return (
@@ -76,7 +76,7 @@ const Search = ({ setCurrentPage, setSelectedItem }) => {
         <input 
           value={searchText} 
           onChange={(e) => setSearchText(e.target.value)}
-          placeholder='Search title or category...'
+          placeholder='Search title, category or subcategory...'
           className="w-full rounded-xl bg-white/10 py-3 pl-12 pr-4 text-white placeholder:text-white/50 outline-none"
         />
       </div>

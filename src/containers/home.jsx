@@ -6,6 +6,7 @@ import NavBar from '../components/navBar/navBar'
 import AddItem from '../components/addItem'
 import Search from '../components/search'
 import Statistics from '../components/statistics/statistics'
+import Settings from '../components/settings/settings'
 import EditItem from '../components/editItem'
 import ItemDetails from '../components/itemDetails/itemDetails'
 
@@ -22,6 +23,7 @@ const Home = () => {
         {currentPage === 'search' && (<Search setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem}/>)}
         {currentPage === 'add' && (<AddItem setCurrentPage={setCurrentPage}/>)}
         {currentPage === 'statistics' && <Statistics setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} />}
+        {currentPage === 'settings' && <Settings setCurrentPage={setCurrentPage} />}
         {currentPage === 'details' && (<ItemDetails item={selectedItem} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem}/>)}
         {currentPage === 'edit' && <EditItem item={selectedItem} setCurrentPage={setCurrentPage}/>}
       </main>

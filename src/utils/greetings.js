@@ -9,7 +9,7 @@ export const getGreeting = () => {
     return "Good afternoon"
   }
 
-  if (hour >= 17 && hour < 22) {
+  if (hour >= 17 && hour < 24) {
     return "Good evening"
   }
 

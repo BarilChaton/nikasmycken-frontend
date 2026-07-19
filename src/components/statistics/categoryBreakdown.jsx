@@ -2,7 +2,7 @@ import { FaGem } from "react-icons/fa"
 
 const CategoryBreakdown = ({ items }) => {
   const categories = items.reduce((acc, item) => {
-    const category = item.category || "Other"
+    const category = item.category?.name || "Other"
 
     if (!acc[category]) {
       acc[category] = {
@@ -38,8 +38,8 @@ const CategoryBreakdown = ({ items }) => {
   return (
     <div className="rounded-2xl bg-white/10 p-5">
       <div className="space-y-5">
-        {sortedCategories.map(([category, data]) => (
-          <div key={category}>
+        {sortedCategories.map(([category, data]) => {
+          return <div key={category}>
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <FaGem className="text-sky-300" />
@@ -68,8 +68,8 @@ const CategoryBreakdown = ({ items }) => {
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          </div>;
+        })}
       </div>
     </div>
   )
