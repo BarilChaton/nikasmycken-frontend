@@ -3,6 +3,24 @@ import { client } from '../client'
 import { FiArrowLeft } from 'react-icons/fi'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 
+const CATEGORIES = [
+  'Ring',
+  'Necklace',
+  'Bracelet',
+  'Earrings',
+  'Pendant',
+  'Parts',
+  'Chain',
+  'Hook',
+  'Jumpring',
+  'Beads 4mm',
+  'Beads 6mm',
+  'Beads 8mm',
+  'Beads 10mm',
+  'Cardboard Package',
+  'Plastic Package'
+]
+
 const EditItem = ({ item, setCurrentPage }) => {
 
   const [title, setTitle] = useState(item.title)
@@ -160,63 +178,84 @@ const EditItem = ({ item, setCurrentPage }) => {
 
       {/* Form */}
       <div className="flex flex-col gap-4">
-        <input
-          value={title}
-          onChange={(e)=>setTitle(e.target.value)}
-          className="input-style"
-          placeholder="Title"
-        />
-
-        <input
-          value={category}
-          onChange={(e)=>setCategory(e.target.value)}
-          className="input-style"
-          placeholder="Category"
-        />
-
-        <div className="grid grid-cols-2 gap-4">
+        <div className='flex flex-col gap-1'>
+          <label className="pl-1 text-sm font-medium text-white/80">Item title</label>
           <input
-            type="number"
-            value={purchasePrice}
-            onChange={(e)=>setPurchasePrice(e.target.value)}
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
             className="input-style"
-            placeholder="Purchase price"
-          />
-
-          <input
-            type="number"
-            value={listingPrice}
-            onChange={(e)=>setListingPrice(e.target.value)}
-            className="input-style"
-            placeholder="Listing price"
-          />
-
-          <input
-            type="number"
-            value={amount}
-            onChange={(e)=>setAmount(e.target.value)}
-            className="input-style"
-            placeholder="Amount"
-          />
-
-          <input
-            type="number"
-            value={amountSold}
-            onChange={(e)=>setAmountSold(e.target.value)}
-            className="input-style"
-            placeholder="Sold"
+            placeholder="Title"
           />
         </div>
 
-        <select
-          value={status}
-          onChange={(e)=>setStatus(e.target.value)}
-          className="input-style"
+        <select 
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+          className='input-style'
         >
-          <option>Unlisted</option>
-          <option>Listed</option>
-          <option>Out of Stock</option>
+          {CATEGORIES.map(category => (
+            <option className='text-sky-700' key={category} value={category}>{category}</option>
+          ))}
         </select>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Purchase price</label>
+            <input
+              type="number"
+              value={purchasePrice}
+              onChange={(e)=>setPurchasePrice(e.target.value)}
+              className="input-style"
+              placeholder="Purchase price"
+            />
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Listing price</label>
+            <input
+              type="number"
+              value={listingPrice}
+              onChange={(e)=>setListingPrice(e.target.value)}
+              className="input-style"
+              placeholder="Listing price"
+            />
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Amount</label>
+            <input
+              type="number"
+              value={amount}
+              onChange={(e)=>setAmount(e.target.value)}
+              className="input-style"
+              placeholder="Amount"
+            />
+          </div>
+
+          <div className='flex flex-col gap-1'>
+            <label className="pl-1 text-sm font-medium text-white/80">Amount sold</label>
+            <input
+              type="number"
+              value={amountSold}
+              onChange={(e)=>setAmountSold(e.target.value)}
+              className="input-style"
+              placeholder="Sold"
+            />
+          </div>
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <label className="pl-1 text-sm font-medium text-white/80">Status</label>
+          <select
+            value={status}
+            onChange={(e)=>setStatus(e.target.value)}
+            className="input-style"
+          >
+            <option>Unlisted</option>
+            <option>Listed</option>
+            <option>Sold out</option>
+          </select>
+        </div>
 
         <button
           onClick={updateItem}

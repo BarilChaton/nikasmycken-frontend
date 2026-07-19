@@ -227,7 +227,7 @@ const AddItem = ({ setCurrentPage }) => {
             >
               <option>Unlisted</option>
               <option>Listed</option>
-              <option>Out of Stock</option>
+              <option>Sold out</option>
             </select>
           </div>
 

@@ -7,6 +7,8 @@ const STATUS_COLORS = {
 }
 
 const InfoCard = ({ item }) => {
+  const status = item.status === 'Sold out' ? 'Sold' : item.status
+
   return (
     <div className="rounded-2xl bg-white/10 p-5 shadow-lg text-white">
       {/* Header */}
@@ -25,7 +27,7 @@ const InfoCard = ({ item }) => {
             <FaCheckCircle />
             <span>Status</span>
           </div>
-          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[item.status]}`}>{item.status}</span>
+          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[status]}`}>{item.status}</span>
         </div>
 
         <div className="flex items-center justify-between">
