@@ -1,30 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { client } from '../client'
+import { categoriesQuery } from '../utils/queries'
 import { FiArrowLeft } from 'react-icons/fi'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 
-const CATEGORIES = [
-  'Ring',
-  'Necklace',
-  'Bracelet',
-  'Earrings',
-  'Pendant',
-  'Parts',
-  'Chain',
-  'Hook',
-  'Jumpring',
-  'Beads 4mm',
-  'Beads 6mm',
-  'Beads 8mm',
-  'Beads 10mm',
-  'Cardboard Package',
-  'Plastic Package'
-]
-
 const EditItem = ({ item, setCurrentPage }) => {
-
   const [title, setTitle] = useState(item.title)
-  const [category, setCategory] = useState(item.category)
+  const [categories, setCategories] = useState([])
+  const [categoryId, setCategoryId] = useState(item.category?._id || '')
+  const [subcategoryKey, setSubcategoryKey] = useState(item.subcategoryKey || '')
   const [purchasePrice, setPurchasePrice] = useState(item.purchasePrice)
   const [listingPrice, setListingPrice] = useState(item.listingPrice)
   const [amount, setAmount] = useState(item.amount)
@@ -35,6 +19,16 @@ const EditItem = ({ item, setCurrentPage }) => {
 
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+
+  useEffect(() => {
+    client.fetch(categoriesQuery)
+      .then(setCategories)
+      .catch(error =>
+        console.error("Failed loading categories:", error)
+      )
+  }, [])
+
+  const selectedCategory = categories.find(category => category._id === categoryId)
 
   const uploadImage = async (e) => {
     const files = Array.from(e.target.files)
@@ -110,12 +104,17 @@ const EditItem = ({ item, setCurrentPage }) => {
         .patch(item._id)
         .set({
           title,
-          category,
+          category: {
+            _type: "reference",
+            _ref: categoryId
+          },
+          subcategoryKey,
           purchasePrice: Number(purchasePrice),
           listingPrice: Number(listingPrice),
           amount: Number(amount),
           amountSold: Number(amountSold),
           status,
+
           photos: formattedPhotos
         })
         .commit()
@@ -188,15 +187,62 @@ const EditItem = ({ item, setCurrentPage }) => {
           />
         </div>
 
-        <select 
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className='input-style'
-        >
-          {CATEGORIES.map(category => (
-            <option className='text-sky-700' key={category} value={category}>{category}</option>
-          ))}
-        </select>
+        <div className="flex flex-col gap-1">
+          <label className="pl-1 text-sm font-medium text-white/80">Category</label>
+
+          <select
+            value={categoryId}
+            onChange={(e) => {
+              setCategoryId(e.target.value)
+              setSubcategoryKey('')
+            }}
+            className="input-style"
+          >
+            <option value="">
+              Select category
+            </option>
+
+            {categories.map(category => (
+              <option
+                className="text-sky-700"
+                key={category._id}
+                value={category._id}
+              >
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {selectedCategory?.subcategories?.length > 0 && (
+          <div className="flex flex-col gap-1">
+            <label className="pl-1 text-sm font-medium text-white/80">
+              Subcategory
+            </label>
+
+            <select
+              value={subcategoryKey}
+              onChange={(e)=>setSubcategoryKey(e.target.value)}
+              className="input-style"
+            >
+
+              <option value="">
+                Select subcategory
+              </option>
+
+              {selectedCategory.subcategories.map(sub => (
+                <option
+                  className="text-sky-700"
+                  key={sub._key}
+                  value={sub._key}
+                >
+                  {sub.name}
+                </option>
+              ))}
+
+            </select>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
           <div className='flex flex-col gap-1'>

@@ -1,4 +1,4 @@
-import { FaGem, FaBoxes, FaCheckCircle, FaBarcode } from "react-icons/fa"
+import { FaGem, FaBoxes, FaCheckCircle, FaBarcode, FaLayerGroup } from "react-icons/fa"
 
 const STATUS_COLORS = {
   Listed: "bg-emerald-500",
@@ -9,6 +9,9 @@ const STATUS_COLORS = {
 const InfoCard = ({ item }) => {
   const status = item.status === 'Sold out' ? 'Sold' : item.status
 
+  const categoryName = item.category?.name || "No category"
+  const subcategory = item.category?.subcategories?.find(sub => sub._key === item.subcategoryKey)
+
   return (
     <div className="rounded-2xl bg-white/10 p-5 shadow-lg text-white">
       {/* Header */}
@@ -16,8 +19,14 @@ const InfoCard = ({ item }) => {
         <h1 className="text-2xl font-bold">{item.title}</h1>
         <div className="mt-2 flex items-center gap-2 text-sky-100">
           <FaGem />
-          <span>{item.category}</span>
+          <span>{categoryName}</span>
         </div>
+        {subcategory && (
+          <div className="mt-2 flex items-center gap-2 text-sky-100">
+            <FaLayerGroup />
+            <span>{subcategory.name}</span>
+          </div>
+        )}
       </div>
 
       {/* Information rows */}
@@ -27,7 +36,7 @@ const InfoCard = ({ item }) => {
             <FaCheckCircle />
             <span>Status</span>
           </div>
-          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[status]}`}>{item.status}</span>
+          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[status] || "bg-gray-500"}`}>{item.status}</span>
         </div>
 
         <div className="flex items-center justify-between">

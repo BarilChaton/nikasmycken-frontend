@@ -3,7 +3,12 @@ export const feedQuery = `*[_type == "inventoryItem"] | order(_createdAt desc) {
     inventoryId,
     title,
     inventoryType,
-    category,
+    category->{
+      _id,
+      name,
+      subcategories
+    },
+    subcategoryKey,
     purchasePrice,
     listingPrice,
     status,
@@ -63,7 +68,12 @@ export const itemDetailsQuery = (id) => `
   *[_type == "inventoryItem" && _id == "${id}"][0]{
     _id,
     title,
-    category,
+    category->{
+      _id,
+      name,
+      subcategories
+    },
+    subcategoryKey,
     purchasePrice,
     listingPrice,
     amount,
@@ -77,5 +87,16 @@ export const itemDetailsQuery = (id) => `
         url
       }
     }
+  }
+`
+
+export const categoriesQuery = `
+  *[_type == "category"] | order(name asc){
+      _id,
+      name,
+      subcategories[]{
+          _key,
+          name
+      }
   }
 `

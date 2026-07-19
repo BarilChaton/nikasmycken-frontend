@@ -8,6 +8,8 @@ const STATUS_COLORS = {
 
 const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
   const status = item.status === 'Sold out' ? 'Sold' : item.status
+  const categoryName = item.category?.name || "No category"
+  const subcategoryName = item.category?.subcategories?.find(sub => sub._key === item.subcategoryKey)?.name
 
   return (
     <div 
@@ -27,10 +29,21 @@ const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
           <h2 className="text-lg font-semibold">{item.title}</h2>
 
           <div className="flex flex-row justify-between">
-            <p className="text-sm">Category: <span className="font-bold">{item.category}</span></p>
+            <div className="text-sm">
+              <p>Category:{" "}<span className="font-bold">{categoryName}</span></p>
+
+              {subcategoryName && (
+                <p className="text-xs text-white/60">{subcategoryName}</p>
+              )}
+            </div>
+
             <div className="flex flex-row gap-1">
-              <p>Status: </p>
-              <span className={`rounded-full px-2 py-1 text-xs ${STATUS_COLORS[status]}`}>{item.status}</span>
+              <p>Status:</p>
+              <span 
+                className={`rounded-full px-2 py-1 text-xs ${STATUS_COLORS[status]}`}
+              >
+                {item.status}
+              </span>
             </div>
           </div>
         </div>

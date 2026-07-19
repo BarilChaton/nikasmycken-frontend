@@ -38,7 +38,7 @@ const ItemDetails = ({ item, setCurrentPage, setSelectedItem }) => {
       </div>
     )
   }
-
+  
   const deleteItem = async () => {
     const confirmed = window.confirm(`Are you sure you want to delete "${item.title}"?`)
     if (!confirmed) return
@@ -65,7 +65,7 @@ const ItemDetails = ({ item, setCurrentPage, setSelectedItem }) => {
           <FiArrowLeft size={22}/>
         </button>
 
-        <h1 className='text-2xl font-bold text-white'>{item.title}</h1>
+        <h1 className='text-2xl font-bold text-white'>{details?.title || item.title}</h1>
       </div>
 
       {/* Image Gallery */}

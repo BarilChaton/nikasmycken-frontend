@@ -1,30 +1,16 @@
 import { v4 as uuidv4 } from 'uuid'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 import { client } from '../client'
+import { categoriesQuery } from '../utils/queries'
 import Spinner from './Spinner'
 
-const CATEGORIES = [
-    'Ring',
-    'Necklace',
-    'Bracelet',
-    'Earrings',
-    'Pendant',
-    'Parts',
-    'Chain',
-    'Hook',
-    'Jumpring',
-    'Beads 4mm',
-    'Beads 6mm',
-    'Beads 8mm',
-    'Beads 10mm',
-    'Cardboard Package',
-    'Plastic Package'
-  ]
-
 const AddItem = ({ setCurrentPage }) => {
+  const [categories, setCategories] = useState([])
+
   const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('')
+  const [categoryId, setCategoryId] = useState('')
+  const [subcategoryKey, setSubcategoryKey] = useState('')
   const [purchasePrice, setPurchasePrice] = useState('')
   const [listingPrice, setListingPrice] = useState('')
   const [amount, setAmount] = useState('')
@@ -36,6 +22,12 @@ const AddItem = ({ setCurrentPage }) => {
   const [loading, setLoading] = useState(false)
   const [wrongImageType, setWrongImageType] = useState(false)
   const [fields, setFields] = useState(false)
+
+  useEffect(() => {
+    client.fetch(categoriesQuery).then(setCategories)
+  }, [])
+
+  const selectedCategory = categories.find(c => c._id === categoryId)
 
   const uploadImage = (e) => {
     const files = Array.from(e.target.files)
@@ -73,7 +65,7 @@ const AddItem = ({ setCurrentPage }) => {
   }
 
   const saveItem = async () => {
-    if (!title || !category || imageAssets.length === 0) {
+    if (!title || !categoryId || !subcategoryKey || imageAssets.length === 0) {
       setFields(true)
 
       setTimeout(() => {
@@ -87,7 +79,11 @@ const AddItem = ({ setCurrentPage }) => {
       _type: 'inventoryItem',
       inventoryId: uuidv4(),
       title,
-      category,
+      category: {
+        _type: 'reference',
+        _ref: categoryId
+      },
+      subcategoryKey,
       purchasePrice: Number(purchasePrice),
       listingPrice: Number(listingPrice),
       status,
@@ -163,16 +159,60 @@ const AddItem = ({ setCurrentPage }) => {
           />
         </div>
 
-        <select 
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className='input-style'
-        >
-          <option value="">Select category</option>
-          {CATEGORIES.map(category => (
-            <option className='text-sky-700' key={category} value={category}>{category}</option>
-          ))}
-        </select>
+        <div className="flex flex-col gap-1">
+          <label className="pl-1 text-sm font-medium text-white/80">
+            Category
+          </label>
+
+          <select
+            value={categoryId}
+            onChange={(e) => {
+              setCategoryId(e.target.value)
+              setSubcategoryKey('')
+            }}
+            className="input-style"
+          >
+            <option value="">Select category</option>
+
+            {categories.map(category => (
+              <option
+                key={category._id}
+                value={category._id}
+                className="text-sky-700"
+              >
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {selectedCategory && (
+          <div className="flex flex-col gap-1">
+            <label className="pl-1 text-sm font-medium text-white/80">
+              Subcategory
+            </label>
+
+            <select
+              value={subcategoryKey}
+              onChange={(e) => setSubcategoryKey(e.target.value)}
+              className="input-style"
+            >
+              <option value="">
+                Select subcategory
+              </option>
+
+              {selectedCategory.subcategories?.map(subcategory => (
+                <option
+                  key={subcategory._id}
+                  value={subcategory._id}
+                  className="text-sky-700"
+                >
+                  {subcategory.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className='grid grid-cols-2 gap-4'>
           <div className='flex flex-col gap-1'>
