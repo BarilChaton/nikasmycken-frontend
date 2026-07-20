@@ -4,14 +4,14 @@ import { feedQuery } from '../utils/queries'
 import Spinner from './spinner'
 import FeedItem from './feedItem'
 
-const Feed = ({setCurrentPage, setSelectedItem, user}) => {
+const Feed = ({ setCurrentPage, setSelectedItem, user }) => {
   const [items, setItems] = useState()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery, {userId: user.uid})
+        const data = await client.fetch(feedQuery, { userId: user.uid })
         setItems(data)
       } catch (error) {
         console.error(error)
@@ -26,7 +26,7 @@ const Feed = ({setCurrentPage, setSelectedItem, user}) => {
   }, [user.uid])
 
   if (loading) {
-    return ( <Spinner message={`Loading your inventory`} /> )
+    return <Spinner message={`Loading your inventory`} />
   }
 
   return (
@@ -37,12 +37,7 @@ const Feed = ({setCurrentPage, setSelectedItem, user}) => {
 
       <div className="grid grid-col gap-4">
         {items.map((item) => (
-          <FeedItem
-            key={item._id}
-            item={item}
-            setCurrentPage={setCurrentPage} 
-            setSelectedItem={setSelectedItem}
-          />
+          <FeedItem key={item._id} item={item} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} />
         ))}
       </div>
     </div>

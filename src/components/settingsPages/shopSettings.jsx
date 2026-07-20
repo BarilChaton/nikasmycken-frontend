@@ -1,8 +1,5 @@
-
 const ShopSettings = () => {
-  return (
-    <div>ShopSettings</div>
-  )
+  return <div>ShopSettings</div>
 }
 
 export default ShopSettings

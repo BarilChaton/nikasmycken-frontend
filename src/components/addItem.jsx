@@ -25,23 +25,18 @@ const AddItem = ({ setCurrentPage, user }) => {
   const [fields, setFields] = useState(false)
 
   useEffect(() => {
-    client.fetch(categoriesQuery, {userId: user.uid}).then(setCategories)
+    client.fetch(categoriesQuery, { userId: user.uid }).then(setCategories)
   }, [])
 
-  const selectedCategory = categories.find(c => c._id === categoryId)
+  const selectedCategory = categories.find((c) => c._id === categoryId)
 
   const uploadImage = (e) => {
     const files = Array.from(e.target.files)
 
     if (!files.length) return
-    const acceptedTypes = [
-      'image/png',
-      'image/jpeg',
-      'image/gif',
-      'image/svg+xml'
-    ]
+    const acceptedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml']
 
-    const invalid = files.some(file => !acceptedTypes.includes(file.type))
+    const invalid = files.some((file) => !acceptedTypes.includes(file.type))
     if (invalid) {
       setWrongImageType(true)
       return
@@ -51,18 +46,21 @@ const AddItem = ({ setCurrentPage, user }) => {
     setLoading(true)
 
     Promise.all(
-      files.map(file => client.assets.upload('image', file, {contentType: file.type, filename: file.name}))
-    ).then((documents) => {
-      setImageAssets(prev => [...prev, ...documents])
-    }).catch(error => {
-      console.error('Image upload error: ', error)
-    }).finally(() => {
-      setLoading(false)
-    })
+      files.map((file) => client.assets.upload('image', file, { contentType: file.type, filename: file.name }))
+    )
+      .then((documents) => {
+        setImageAssets((prev) => [...prev, ...documents])
+      })
+      .catch((error) => {
+        console.error('Image upload error: ', error)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const removeImage = (id) => {
-    setImageAssets(imageAssets.filter(image => image._id !== id))
+    setImageAssets(imageAssets.filter((image) => image._id !== id))
   }
 
   const saveItem = async () => {
@@ -91,7 +89,7 @@ const AddItem = ({ setCurrentPage, user }) => {
       status,
       amount: Number(amount),
       amountSold: Number(sold),
-      photos: imageAssets.map(image => ({
+      photos: imageAssets.map((image) => ({
         _key: uuidv4(),
         _type: 'image',
         asset: {
@@ -104,45 +102,43 @@ const AddItem = ({ setCurrentPage, user }) => {
     try {
       await client.create(item)
       setCurrentPage('home')
-    } catch(error) {
+    } catch (error) {
       console.error('Failed to create inventory item: ', error)
     }
   }
 
   return (
     <div className="h-full overflow-y-auto px-5 py-4 pb-24">
-      {fields && (
-        <p className="mb-4 text-center text-red-400">Please fill in all required fields</p>
-      )}
+      {fields && <p className="mb-4 text-center text-red-400">Please fill in all required fields</p>}
 
-      <h1 className='mb-5 text-2xl font-bold text-white'>Add Item</h1>
+      <h1 className="mb-5 text-2xl font-bold text-white">Add Item</h1>
 
       {/* Images */}
-      <div className='relative rounded-2xl bg-white/10 p-4'>
+      <div className="relative rounded-2xl bg-white/10 p-4">
         {loading && (
-          <div className='absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/50 backdrop-blur-sm'>
+          <div className="absolute inset-0 z-20 flex items-center justify-center rounded-2xl bg-black/50 backdrop-blur-sm">
             <Spinner message="Uploading images..." />
           </div>
         )}
 
-        {wrongImageType && (
-          <p className='text-red-400'>Unsupported image type</p>
-        )}
+        {wrongImageType && <p className="text-red-400">Unsupported image type</p>}
 
-        <label className={`flex h-40 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/30 text-white 
-          ${loading ? 'pointer-events-none opacity-50}' : 'cursor-pointer'}`
-        }>
-          <RiImageAddLine size={40}/>
+        <label
+          className={`flex h-40 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/30 text-white 
+          ${loading ? 'pointer-events-none opacity-50}' : 'cursor-pointer'}`}>
+          <RiImageAddLine size={40} />
           <span>Add Photos</span>
-          <input type="file" multiple accept='image/*' onChange={uploadImage} className='hidden' />
+          <input type="file" multiple accept="image/*" onChange={uploadImage} className="hidden" />
         </label>
 
-        <div className='mt-4 grid grid-cols-3 gap-3'>
-          {imageAssets.map(image => (
-            <div key={image._id} className='relative'>
-              <img src={image.url} alt="upload" className='h-24 w-full rounded-xl object-cover' />
-              <button onClick={() => removeImage(image._id)} className='absolute right-1 top-1 rounded-full bg-white p-1 text-red-500'>
-                <RiDeleteBin2Fill/>
+        <div className="mt-4 grid grid-cols-3 gap-3">
+          {imageAssets.map((image) => (
+            <div key={image._id} className="relative">
+              <img src={image.url} alt="upload" className="h-24 w-full rounded-xl object-cover" />
+              <button
+                onClick={() => removeImage(image._id)}
+                className="absolute right-1 top-1 rounded-full bg-white p-1 text-red-500">
+                <RiDeleteBin2Fill />
               </button>
             </div>
           ))}
@@ -150,21 +146,19 @@ const AddItem = ({ setCurrentPage, user }) => {
       </div>
 
       {/* Form */}
-      <div className='mt-5 flex flex-col gap-4'>
-        <div className='flex flex-col gap-1'>
+      <div className="mt-5 flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <label className="pl-1 text-sm font-medium text-white/80">Item title</label>
-          <input 
-            value={title} 
+          <input
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder='Item title'
-            className='input-style'
+            placeholder="Item title"
+            className="input-style"
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="pl-1 text-sm font-medium text-white/80">
-            Category
-          </label>
+          <label className="pl-1 text-sm font-medium text-white/80">Category</label>
 
           <select
             value={categoryId}
@@ -172,16 +166,11 @@ const AddItem = ({ setCurrentPage, user }) => {
               setCategoryId(e.target.value)
               setSubcategoryKey('')
             }}
-            className="input-style"
-          >
+            className="input-style">
             <option value="">Select category</option>
 
-            {categories.map(category => (
-              <option
-                key={category._id}
-                value={category._id}
-                className="text-sky-700"
-              >
+            {categories.map((category) => (
+              <option key={category._id} value={category._id} className="text-sky-700">
                 {category.name}
               </option>
             ))}
@@ -190,25 +179,13 @@ const AddItem = ({ setCurrentPage, user }) => {
 
         {selectedCategory && (
           <div className="flex flex-col gap-1">
-            <label className="pl-1 text-sm font-medium text-white/80">
-              Subcategory
-            </label>
+            <label className="pl-1 text-sm font-medium text-white/80">Subcategory</label>
 
-            <select
-              value={subcategoryKey}
-              onChange={(e) => setSubcategoryKey(e.target.value)}
-              className="input-style"
-            >
-              <option value="">
-                Select subcategory
-              </option>
+            <select value={subcategoryKey} onChange={(e) => setSubcategoryKey(e.target.value)} className="input-style">
+              <option value="">Select subcategory</option>
 
-              {selectedCategory.subcategories?.map(subcategory => (
-                <option
-                  key={subcategory._id}
-                  value={subcategory._id}
-                  className="text-sky-700"
-                >
+              {selectedCategory.subcategories?.map((subcategory) => (
+                <option key={subcategory._id} value={subcategory._id} className="text-sky-700">
                   {subcategory.name}
                 </option>
               ))}
@@ -216,67 +193,63 @@ const AddItem = ({ setCurrentPage, user }) => {
           </div>
         )}
 
-        <div className='grid grid-cols-2 gap-4'>
-          <div className='flex flex-col gap-1'>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Purchase price</label>
-            <input 
-              type="number" 
+            <input
+              type="number"
               value={purchasePrice}
               onChange={(e) => setPurchasePrice(e.target.value)}
-              placeholder='Purchase price'
-              className='input-style'
+              placeholder="Purchase price"
+              className="input-style"
             />
           </div>
 
-          <div className='flex flex-col gap-1'>
+          <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Listing price</label>
-            <input 
-              type="number" 
+            <input
+              type="number"
               value={listingPrice}
               onChange={(e) => setListingPrice(e.target.value)}
-              placeholder='Listing price'
-              className='input-style'
+              placeholder="Listing price"
+              className="input-style"
             />
           </div>
-          <div className='flex flex-col gap-1'>
+          <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Amount</label>
-            <input 
-              type="number" 
+            <input
+              type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder='Amount'
-              className='input-style'
+              placeholder="Amount"
+              className="input-style"
             />
           </div>
-          <div className='flex flex-col gap-1'>
+          <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Amount sold</label>
-            <input 
-              type="number" 
+            <input
+              type="number"
               value={sold}
               onChange={(e) => setSold(e.target.value)}
-              placeholder='Amount sold'
-              className='input-style'
+              placeholder="Amount sold"
+              className="input-style"
             />
           </div>
 
-          <div className='flex flex-col gap-1'>
+          <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Status</label>
-            <select 
+            <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className='input-style'
-              placeholder='Status'
-            >
+              className="input-style"
+              placeholder="Status">
               <option>Unlisted</option>
               <option>Listed</option>
               <option>Sold out</option>
             </select>
           </div>
 
-          <button
-            onClick={saveItem}
-            className='col-span-2 mt-4 rounded-xl bg-white py-3 font-bold text-sky-800'
-          >
+          <button onClick={saveItem} className="col-span-2 mt-4 rounded-xl bg-white py-3 font-bold text-sky-800">
             Save Item
           </button>
         </div>

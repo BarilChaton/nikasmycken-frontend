@@ -8,14 +8,14 @@ import CategoryBreakdown from './categoryBreakdown'
 import StatusBreakdown from './statusBreakdown'
 import TopItems from './topItems'
 
-const Statistics = ({setCurrentPage, setSelectedItem, user}) => {  
+const Statistics = ({ setCurrentPage, setSelectedItem, user }) => {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery, {userId: user.uid})
+        const data = await client.fetch(feedQuery, { userId: user.uid })
         setItems(data)
       } catch (error) {
         console.error('Failed loading statistics:', error)
@@ -41,7 +41,7 @@ const Statistics = ({setCurrentPage, setSelectedItem, user}) => {
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold text-white">Financial</h2>
         <div className="rounded-2xl bg-white/10 p-5 text-white">
-          <FinanceCard items={items}/>
+          <FinanceCard items={items} />
         </div>
       </section>
 
@@ -49,7 +49,7 @@ const Statistics = ({setCurrentPage, setSelectedItem, user}) => {
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold text-white">Categories</h2>
         <div className="rounded-2xl bg-white/10 p-5 text-white">
-          <CategoryBreakdown items={items}/>
+          <CategoryBreakdown items={items} />
         </div>
       </section>
 
@@ -57,7 +57,7 @@ const Statistics = ({setCurrentPage, setSelectedItem, user}) => {
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold text-white">Status Breakdown</h2>
         <div className="rounded-2xl bg-white/10 p-5 text-white">
-          <StatusBreakdown items={items}/>
+          <StatusBreakdown items={items} />
         </div>
       </section>
 
@@ -65,11 +65,7 @@ const Statistics = ({setCurrentPage, setSelectedItem, user}) => {
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold text-white">Most Valuable Items</h2>
         <div className="rounded-2xl bg-white/10 p-5 text-white">
-          <TopItems 
-            items={items}
-            setCurrentPage={setCurrentPage}
-            setSelectedItem={setSelectedItem}
-          />
+          <TopItems items={items} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} />
         </div>
       </section>
     </div>

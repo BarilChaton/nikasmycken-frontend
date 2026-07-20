@@ -1,23 +1,24 @@
-
 const FinanceCard = ({ items }) => {
-  const stats = items.reduce((totals, item) => {
-    const purchasePrice = item.purchasePrice || 0
-    const listingPrice = item.listingPrice || 0
-    const amount = item.amount || 0
-    const amountSold = item.amountSold || 0
+  const stats = items.reduce(
+    (totals, item) => {
+      const purchasePrice = item.purchasePrice || 0
+      const listingPrice = item.listingPrice || 0
+      const amount = item.amount || 0
+      const amountSold = item.amountSold || 0
 
-    totals.investment += purchasePrice * (amount + amountSold)
-    totals.inventoryValue += listingPrice * amount
-    totals.revenue += listingPrice * amountSold
-    totals.profit += (listingPrice - purchasePrice) * amountSold
-    return totals
-  },
-  {
-    investment: 0,
-    inventoryValue: 0,
-    revenue: 0,
-    profit: 0
-  })
+      totals.investment += purchasePrice * (amount + amountSold)
+      totals.inventoryValue += listingPrice * amount
+      totals.revenue += listingPrice * amountSold
+      totals.profit += (listingPrice - purchasePrice) * amountSold
+      return totals
+    },
+    {
+      investment: 0,
+      inventoryValue: 0,
+      revenue: 0,
+      profit: 0
+    }
+  )
 
   const format = (value) => `${Math.round(value).toLocaleString('sv-SE')} kr`
 

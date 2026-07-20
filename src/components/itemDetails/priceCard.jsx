@@ -1,7 +1,6 @@
-import { FaCoins, FaChartLine, FaShoppingCart, FaHistory, FaBoxOpen } from "react-icons/fa"
+import { FaCoins, FaChartLine, FaShoppingCart, FaHistory, FaBoxOpen } from 'react-icons/fa'
 
 const PriceCard = ({ item }) => {
-
   const purchasePrice = item.purchasePrice || 0
   const listingPrice = item.listingPrice || 0
   const amount = item.amount || 0

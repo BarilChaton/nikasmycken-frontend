@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
-import { useAuth } from "./auth/AuthContext"
-import Login from "./components/Login"
+import { useAuth } from './auth/AuthContext'
+import Login from './components/Login'
 import Home from './containers/home'
 import Spinner from './components/spinner'
 
 const App = () => {
-
   const { user, loading } = useAuth()
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const App = () => {
   if (!user) {
     return <Login />
   } else {
-    return <Home user={user}/>
+    return <Home user={user} />
   }
 }
 

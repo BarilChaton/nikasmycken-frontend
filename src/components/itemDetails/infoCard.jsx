@@ -1,16 +1,16 @@
-import { FaGem, FaBoxes, FaCheckCircle, FaBarcode, FaLayerGroup } from "react-icons/fa"
+import { FaGem, FaBoxes, FaCheckCircle, FaBarcode, FaLayerGroup } from 'react-icons/fa'
 
 const STATUS_COLORS = {
-  Listed: "bg-emerald-500",
-  Unlisted: "bg-amber-500",
-  Sold: "bg-gray-500"
+  Listed: 'bg-emerald-500',
+  Unlisted: 'bg-amber-500',
+  Sold: 'bg-gray-500'
 }
 
 const InfoCard = ({ item }) => {
   const status = item.status === 'Sold out' ? 'Sold' : item.status
 
-  const categoryName = item.category?.name || "No category"
-  const subcategory = item.category?.subcategories?.find(sub => sub._key === item.subcategoryKey)
+  const categoryName = item.category?.name || 'No category'
+  const subcategory = item.category?.subcategories?.find((sub) => sub._key === item.subcategoryKey)
 
   return (
     <div className="rounded-2xl bg-white/10 p-5 shadow-lg text-white">
@@ -36,7 +36,9 @@ const InfoCard = ({ item }) => {
             <FaCheckCircle />
             <span>Status</span>
           </div>
-          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[status] || "bg-gray-500"}`}>{item.status}</span>
+          <span className={`rounded-full px-3 py-1 text-sm ${STATUS_COLORS[status] || 'bg-gray-500'}`}>
+            {item.status}
+          </span>
         </div>
 
         <div className="flex items-center justify-between">

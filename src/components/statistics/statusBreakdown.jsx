@@ -1,7 +1,7 @@
 const COLORS = {
-  Unlisted: "bg-gray-400",
-  Listed: "bg-emerald-500",
-  Sold: "bg-sky-500"
+  Unlisted: 'bg-gray-400',
+  Listed: 'bg-emerald-500',
+  Sold: 'bg-sky-500'
 }
 
 const StatusBreakdown = ({ items }) => {
@@ -40,11 +40,13 @@ const StatusBreakdown = ({ items }) => {
               <div className="relative h-5 overflow-hidden rounded-full bg-white/10">
                 <div
                   className={`flex h-full items-center justify-center rounded-full ${COLORS[newStatus]} transition-all duration-500`}
-                  style={{width: `${percentage}%`}}>
-                  {percentage >= 10 && (<span className="text-xs font-semibold text-white">{percentage}%</span>)}
+                  style={{ width: `${percentage}%` }}>
+                  {percentage >= 10 && <span className="text-xs font-semibold text-white">{percentage}%</span>}
                 </div>
                 {percentage < 10 && percentage > 0 && (
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-white">{percentage}%</span>
+                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-semibold text-white">
+                    {percentage}%
+                  </span>
                 )}
               </div>
             </div>
