@@ -31,7 +31,7 @@ export const validateBackup = (data) => {
     const required = ["title", "category"]
     for (const field of required) {
       if (!item[field]) {
-        throw new Error( `Inventory item missing ${field}`)
+        throw new Error(`Inventory item missing ${field}`)
       }
     }
   }

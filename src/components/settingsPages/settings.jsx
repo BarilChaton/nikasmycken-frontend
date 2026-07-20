@@ -1,7 +1,7 @@
 import { FiArrowLeft, FiTag, FiUser, FiDownload } from 'react-icons/fi'
 import CategoryManager from './CategoryManager'
 import AccountSettings from './accountSettings'
-import ExportSettings from './exportSettings'
+import ImportExport from './importExport'
 
 const Settings = ({ setCurrentPage, user }) => {
   return (
@@ -42,7 +42,7 @@ const Settings = ({ setCurrentPage, user }) => {
           <h2 className="text-xl font-bold">Import & Export</h2>
         </div>
 
-        <ExportSettings user={user} />
+        <ImportExport user={user} />
       </div>
     </div>
   )
