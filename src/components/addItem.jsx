@@ -23,6 +23,7 @@ const AddItem = ({ setCurrentPage, user }) => {
   const [loading, setLoading] = useState(false)
   const [wrongImageType, setWrongImageType] = useState(false)
   const [fields, setFields] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     client.fetch(categoriesQuery, { userId: user.uid }).then(setCategories)
@@ -64,6 +65,10 @@ const AddItem = ({ setCurrentPage, user }) => {
   }
 
   const saveItem = async () => {
+    if (saving) {
+      return
+    }
+
     if (!title || !categoryId || !subcategoryKey || imageAssets.length === 0) {
       setFields(true)
 
@@ -100,10 +105,13 @@ const AddItem = ({ setCurrentPage, user }) => {
     }
 
     try {
+      setSaving(true)
       await client.create(item)
       setCurrentPage('home')
     } catch (error) {
       console.error('Failed to create inventory item: ', error)
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -185,7 +193,7 @@ const AddItem = ({ setCurrentPage, user }) => {
               <option value="">Select subcategory</option>
 
               {selectedCategory.subcategories?.map((subcategory) => (
-                <option key={subcategory._id} value={subcategory._id} className="text-sky-700">
+                <option key={subcategory._key} value={subcategory._key} className="text-sky-700">
                   {subcategory.name}
                 </option>
               ))}
@@ -249,8 +257,12 @@ const AddItem = ({ setCurrentPage, user }) => {
             </select>
           </div>
 
-          <button onClick={saveItem} className="col-span-2 mt-4 rounded-xl bg-white py-3 font-bold text-sky-800">
-            Save Item
+          <button
+            onClick={saveItem}
+            disabled={saving}
+            className={`col-span-2 mt-4 rounded-xl py-3 font-bold transition
+              ${saving ? 'cursor-not-allowed bg-white/50 text-sky-800/60' : 'bg-white text-sky-800 active:scale-95'}`}>
+            {saving ? 'Saving...' : 'Save Item'}
           </button>
         </div>
       </div>

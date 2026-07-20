@@ -23,7 +23,7 @@ const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
         <div>
           <h2 className="text-lg font-semibold">{item.title}</h2>
 
-          <div className="flex flex-row justify-between">
+          <div className="flex items-start justify-between">
             <div className="text-sm">
               <p>
                 Category: <span className="font-bold">{categoryName}</span>
