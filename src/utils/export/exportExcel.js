@@ -1,5 +1,6 @@
 import * as XLSX from "xlsx"
 import { exportInventory } from "./exportInventory"
+import { saveFile } from "./saveFile"
 
 export const exportExcel = async (userId) => {
   try {
@@ -150,9 +151,19 @@ export const exportExcel = async (userId) => {
     ======================================
     */
 
-    XLSX.writeFile(
-      workbook,
-      `inventory-${new Date().toISOString().slice(0, 10)}.xlsx`
+    const buffer =
+      XLSX.write(
+        workbook,
+        {
+          type: "array",
+          bookType: "xlsx"
+        }
+      )
+
+    await saveFile(
+      `inventory-${new Date().toISOString().slice(0, 10)}.xlsx`,
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      buffer
     )
 
   } catch (error) {
