@@ -41,7 +41,7 @@ const StatsDashboard = ({ user }) => {
     <div className="w-full px-5 grid grid-cols-2 gap-4">
       <StatsCard title="Total Items Types" value={stats.totalItems} icon={FaGem} />
 
-      <StatsCard title="Listed" value={stats.listedItems} icon={FaTags} />
+      <StatsCard title="Item Types Listed" value={stats.listedItems} icon={FaTags} />
 
       <StatsCard
         title="Total Value"
