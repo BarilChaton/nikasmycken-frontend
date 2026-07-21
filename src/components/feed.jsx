@@ -5,7 +5,7 @@ import Spinner from './spinner'
 import FeedItem from './feedItem'
 
 const Feed = (props) => {
-  const { setCurrentPage, setSelectedItem, selectionMode, setSelectionMode, selectedItems, setSelectedItems, user } = props
+  const { setCurrentPage, setSelectedItem, selectionMode, setSelectionMode, selectedItems, setSelectedItems, user, refresh } = props
 
   const [items, setItems] = useState()
   const [loading, setLoading] = useState(true)
@@ -25,7 +25,7 @@ const Feed = (props) => {
     if (user.uid) {
       fetchItems()
     }
-  }, [user.uid])
+  }, [user.uid, refresh])
 
   if (loading) {
     return <Spinner message={`Loading your inventory`} />

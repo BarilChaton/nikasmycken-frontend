@@ -9,13 +9,17 @@ import Statistics from '../components/statistics/statistics'
 import Settings from '../components/settingsPages/settings'
 import EditItem from '../components/editItem'
 import ItemDetails from '../components/itemDetails/itemDetails'
+import SelectionBar from '../components/selectionBar'
 
 const Home = ({ user }) => {
   const [currentPage, setCurrentPage] = useState('home')
   const [selectedItem, setSelectedItem] = useState(null)
 
-  const [selectionMode, setSelectionMode] = useState(false)
   const [selectedItems, setSelectedItems] = useState([])
+  const [selectionMode, setSelectionMode] = useState(false)
+  const [copying, setCopying] = useState(false)
+
+  const [refresh, setRefresh] = useState(false)
 
   return (
     <div className={`h-dvh flex flex-col overflow-hidden lightModePrimaryBg`}>
@@ -31,6 +35,7 @@ const Home = ({ user }) => {
             selectedItems={selectedItems}
             setSelectedItems={setSelectedItems}
             user={user}
+            refresh={refresh}
           />
         )}
         {currentPage === 'search' && (
@@ -52,6 +57,17 @@ const Home = ({ user }) => {
         )}
         {currentPage === 'edit' && <EditItem item={selectedItem} setCurrentPage={setCurrentPage} user={user} />}
       </main>
+      {selectionMode && (
+        <SelectionBar
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
+          setSelectionMode={setSelectionMode}
+          user={user}
+          setRefresh={setRefresh}
+          copying={copying}
+          setCopying={setCopying}
+        />
+      )}
       <NavBar currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </div>
   )

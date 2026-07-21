@@ -20,6 +20,7 @@ export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | orde
     photos[]{
       _key,
       asset->{
+        _id,
         url
       }
     },
