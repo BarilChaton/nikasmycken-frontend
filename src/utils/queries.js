@@ -60,7 +60,8 @@ export const dashboardQuery = `
   *[_type == "inventoryItem" && ownerId==$userId]{
     status,
     listingPrice,
-    amount
+    amount,
+    amountSold
   }
 `
 

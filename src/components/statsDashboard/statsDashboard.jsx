@@ -17,9 +17,9 @@ const StatsDashboard = ({ user }) => {
       try {
         const data = await client.fetch(dashboardQuery, { userId: user.uid })
         const totalItems = data.length
-        const listedItems = data.filter((item) => item.status === 'listed').legnth || 0
+        const listedItems = data.filter((item) => item.status === 'Listed').length || 0
         const totalValue = data.reduce((sum, item) => sum + (item.listingPrice || 0) * (item.amount || 0), 0)
-        const itemsSold = 0
+        const itemsSold = data.reduce((sum, item) => sum + (item.amountSold || 0), 0)
 
         setStats({
           totalItems,
@@ -39,7 +39,7 @@ const StatsDashboard = ({ user }) => {
 
   return (
     <div className="w-full px-5 grid grid-cols-2 gap-4">
-      <StatsCard title="Total Items" value={stats.totalItems} icon={FaGem} />
+      <StatsCard title="Total Items Types" value={stats.totalItems} icon={FaGem} />
 
       <StatsCard title="Listed" value={stats.listedItems} icon={FaTags} />
 
