@@ -6,7 +6,8 @@ import { feedQuery } from '../utils/queries'
 import Spinner from './spinner'
 import FeedItem from './feedItem'
 
-const Search = ({ setCurrentPage, setSelectedItem, user }) => {
+const Search = (props) => {
+  const { setCurrentPage, setSelectedItem, selectionMode, setSelectionMode, selectedItems, setSelectedItems, user } = props
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -61,9 +62,7 @@ const Search = ({ setCurrentPage, setSelectedItem, user }) => {
     <div className="h-full overflow-y-auto px-5 py-4 pb-24">
       {/* Header */}
       <div className="mb-5 flex items-center gap-4">
-        <button
-          onClick={() => setCurrentPage('home')}
-          className="rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20">
+        <button onClick={() => setCurrentPage('home')} className="rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20">
           <FiArrowLeft size={22} />
         </button>
 
@@ -128,7 +127,16 @@ const Search = ({ setCurrentPage, setSelectedItem, user }) => {
       <div className="grid gap-4">
         {filteredItems.length ? (
           filteredItems.map((item) => (
-            <FeedItem key={item._id} item={item} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} />
+            <FeedItem
+              key={item._id}
+              item={item}
+              setCurrentPage={setCurrentPage}
+              setSelectedItem={setSelectedItem}
+              selectionMode={selectionMode}
+              setSelectionMode={setSelectionMode}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
           ))
         ) : (
           <div className="rounded-2xl bg-white/10 p-8 text-center text-white/70">No items found.</div>

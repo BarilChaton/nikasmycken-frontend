@@ -1,4 +1,6 @@
+import { useRef } from 'react'
 import { FaBoxes, FaCoins } from 'react-icons/fa'
+import { FiCheckSquare, FiSquare } from 'react-icons/fi'
 
 const STATUS_COLORS = {
   Listed: 'bg-emerald-500',
@@ -6,18 +8,60 @@ const STATUS_COLORS = {
   Sold: 'bg-red-500'
 }
 
-const FeedItem = ({ item, setCurrentPage, setSelectedItem }) => {
+const PRESS_TIMER_DURATION = 500
+
+const FeedItem = (props) => {
+  const { item, setCurrentPage, setSelectedItem, selectionMode, setSelectionMode, selectedItems, setSelectedItems } = props
+
+  const pressTimer = useRef(null)
+  const isSelected = selectedItems.some((selected) => selected._id === item._id)
+  const toggleSelection = () => {
+    if (isSelected) {
+      const updated = selectedItems.filter((selected) => selected._id !== item._id)
+      setSelectedItems(updated)
+
+      if (updated.length === 0) {
+        setSelectionMode(false)
+      }
+    } else {
+      setSelectedItems([...selectedItems, item])
+    }
+  }
+
+  const handlePressStart = () => {
+    pressTimer.current = setTimeout(() => {
+      setSelectionMode(true)
+      setSelectedItems([item])
+    }, PRESS_TIMER_DURATION)
+  }
+
+  const handlePressEnd = () => {
+    clearTimeout(pressTimer.current)
+  }
+
   const status = item.status === 'Sold out' ? 'Sold' : item.status
   const categoryName = item.category?.name || 'No category'
   const subcategoryName = item.category?.subcategories?.find((sub) => sub._key === item.subcategoryKey)?.name
 
   return (
     <div
+      onPointerDown={handlePressStart}
+      onPointerUp={handlePressEnd}
+      onPointerLeave={handlePressEnd}
+      onPointerCancel={handlePressEnd}
       onClick={() => {
+        if (selectionMode) {
+          toggleSelection()
+          return
+        }
+
         setSelectedItem(item)
         setCurrentPage('details')
       }}
-      className="cursor-pointer flex gap-2 rounded-2xl bg-white/10 p-2 shadow-md text-white">
+      className={`cursor-pointer flex gap-2 rounded-2xl p-2 shadow-md text-white transition ${isSelected ? 'bg-white/30' : 'bg-white/10'}`}>
+      {selectionMode && (
+        <div className="flex items-center px-2 text-white">{isSelected ? <FiCheckSquare size={24} /> : <FiSquare size={24} />}</div>
+      )}
       <img src={item.image} alt={item.title} className="w-24 h-24 rounded-xl object-cover" />
       <div className="flex flex-1 flex-col justify-between">
         <div>
