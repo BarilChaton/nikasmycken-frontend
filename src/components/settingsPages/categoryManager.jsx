@@ -64,7 +64,25 @@ const CategoryManager = ({ user }) => {
 
   const deleteCategory = async (category) => {
     try {
+      const itemsUsingCategory = await client.fetch(
+        `count(*[
+          _type == "inventoryItem" &&
+          ownerId == $userId &&
+          category._ref == $categoryId
+        ])`,
+        {
+          userId: user.uid,
+          categoryId: category._id
+        }
+      )
+
+      if (itemsUsingCategory > 0) {
+        alert(`This category is used by ${itemsUsingCategory} item(s).`)
+        return
+      }
+
       await client.delete(category._id)
+
       if (selectedCategory?._id === category._id) {
         setSelectedCategory(null)
       }
