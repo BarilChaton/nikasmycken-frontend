@@ -64,7 +64,7 @@ const Statistics = ({ setCurrentPage, setSelectedItem, user }) => {
       {/* Most Valuable */}
       <section className="mb-8">
         <h2 className="mb-3 text-lg font-semibold text-white">Most Valuable Items</h2>
-        <div className="rounded-2xl bg-white/10 p-5 text-white">
+        <div className="rounded-2xl bg-white/10 p-3 text-white">
           <TopItems items={items} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} />
         </div>
       </section>

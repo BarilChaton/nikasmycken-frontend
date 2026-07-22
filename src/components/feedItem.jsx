@@ -58,7 +58,9 @@ const FeedItem = (props) => {
         setSelectedItem(item)
         setCurrentPage('details')
       }}
-      className={`cursor-pointer flex gap-2 rounded-2xl p-2 shadow-md text-white transition ${isSelected ? 'bg-white/30' : 'bg-white/10'}`}>
+      className={`cursor-pointer select-none flex gap-2 rounded-2xl p-2 shadow-md text-white transition ${
+        isSelected ? 'bg-white/30' : 'bg-white/10'
+      }`}>
       {selectionMode && (
         <div className="flex items-center px-2 text-white">{isSelected ? <FiCheckSquare size={24} /> : <FiSquare size={24} />}</div>
       )}

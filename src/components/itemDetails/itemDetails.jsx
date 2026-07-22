@@ -6,7 +6,7 @@ import ImageGallery from './imageGallery'
 import InfoCard from './infoCard'
 import PriceCard from './priceCard'
 
-const ItemDetails = ({ item, setCurrentPage, setSelectedItem, user }) => {
+const ItemDetails = ({ item, setCurrentPage, setSelectedItem }) => {
   const [details, setDetails] = useState(null)
   const [deleting, setDeleting] = useState(false)
 
@@ -46,12 +46,10 @@ const ItemDetails = ({ item, setCurrentPage, setSelectedItem, user }) => {
   }
 
   return (
-    <div className="h-full overflow-y-auto px-5 py-4 pb-24">
+    <div className="h-full select-none overflow-y-auto px-5 py-4 pb-24">
       {/* Header */}
       <div className="mb-5 flex items-center gap-4">
-        <button
-          onClick={() => setCurrentPage('home')}
-          className="rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20">
+        <button onClick={() => setCurrentPage('home')} className="rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20">
           <FiArrowLeft size={22} />
         </button>
 
