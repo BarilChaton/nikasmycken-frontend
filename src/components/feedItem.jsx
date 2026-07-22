@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { FaBoxes, FaCoins } from 'react-icons/fa'
-import { FiCheckSquare, FiSquare } from 'react-icons/fi'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { FiCheckSquare, FiSquare, FiMenu } from 'react-icons/fi'
 
 const STATUS_COLORS = {
   Listed: 'bg-emerald-500',
@@ -13,6 +15,15 @@ const PRESS_TIMER_DURATION = 500
 const FeedItem = (props) => {
   const { item, setCurrentPage, setSelectedItem, selectionMode, setSelectionMode, selectedItems, setSelectedItems } = props
 
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item._id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 10 : 1
+  }
+
   const pressTimer = useRef(null)
   const isSelected = selectedItems.some((selected) => selected._id === item._id)
   const toggleSelection = () => {
@@ -24,6 +35,7 @@ const FeedItem = (props) => {
         setSelectionMode(false)
       }
     } else {
+      setSelectionMode(true)
       setSelectedItems([...selectedItems, item])
     }
   }
@@ -45,11 +57,18 @@ const FeedItem = (props) => {
 
   return (
     <div
-      onPointerDown={handlePressStart}
+      ref={setNodeRef}
+      style={style}
+      onPointerDown={(e) => {
+        if (e.target.closest('.drag-handle')) return
+        handlePressStart()
+      }}
       onPointerUp={handlePressEnd}
       onPointerLeave={handlePressEnd}
       onPointerCancel={handlePressEnd}
-      onClick={() => {
+      onClick={(e) => {
+        if (e.defaultPrevented) return
+
         if (selectionMode) {
           toggleSelection()
           return
@@ -58,7 +77,7 @@ const FeedItem = (props) => {
         setSelectedItem(item)
         setCurrentPage('details')
       }}
-      className={`cursor-pointer select-none flex gap-2 rounded-2xl p-2 shadow-md text-white transition ${
+      className={`cursor-pointer select-none flex gap-2 rounded-2xl p-2 shadow-md text-white transition-transform duration-200 ${
         isSelected ? 'bg-white/30' : 'bg-white/10'
       }`}>
       {selectionMode && (
@@ -82,6 +101,15 @@ const FeedItem = (props) => {
               <p>Status:</p>
               <span className={`rounded-full px-2 py-1 text-xs ${STATUS_COLORS[status]}`}>{item.status}</span>
             </div>
+            {!selectionMode && (
+              <button
+                {...attributes}
+                {...(selectionMode ? {} : listeners)}
+                onClick={(e) => e.stopPropagation()}
+                className="drag-handle touch-none cursor-grab rounded-lg p-2 text-white/70 active:cursor-grabbing">
+                <FiMenu size={22} />
+              </button>
+            )}
           </div>
         </div>
 

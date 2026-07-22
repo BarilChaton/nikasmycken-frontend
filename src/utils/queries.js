@@ -1,4 +1,4 @@
-export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(_createdAt desc) {
+export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder asc) {
     _id,
     inventoryId,
     title,
@@ -38,7 +38,7 @@ export const searchQuery = (searchTerm) => {
         inventoryId match "${searchTerm}*" ||
         description match "${searchTerm}*"
       )
-    ] | order(_createdAt desc) {
+    ] | order(sortOrder asc) {
       _id,
       inventoryId,
       title,

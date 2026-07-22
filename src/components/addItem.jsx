@@ -46,9 +46,7 @@ const AddItem = ({ setCurrentPage, user }) => {
     setWrongImageType(false)
     setLoading(true)
 
-    Promise.all(
-      files.map((file) => client.assets.upload('image', file, { contentType: file.type, filename: file.name }))
-    )
+    Promise.all(files.map((file) => client.assets.upload('image', file, { contentType: file.type, filename: file.name })))
       .then((documents) => {
         setImageAssets((prev) => [...prev, ...documents])
       })
@@ -82,6 +80,7 @@ const AddItem = ({ setCurrentPage, user }) => {
     const item = {
       _type: 'inventoryItem',
       inventoryId: uuidv4(),
+      sortOrder: Date.now(),
       title,
       category: {
         _type: 'reference',
@@ -143,9 +142,7 @@ const AddItem = ({ setCurrentPage, user }) => {
           {imageAssets.map((image) => (
             <div key={image._id} className="relative">
               <img src={image.url} alt="upload" className="h-24 w-full rounded-xl object-cover" />
-              <button
-                onClick={() => removeImage(image._id)}
-                className="absolute right-1 top-1 rounded-full bg-white p-1 text-red-500">
+              <button onClick={() => removeImage(image._id)} className="absolute right-1 top-1 rounded-full bg-white p-1 text-red-500">
                 <RiDeleteBin2Fill />
               </button>
             </div>
@@ -157,12 +154,7 @@ const AddItem = ({ setCurrentPage, user }) => {
       <div className="mt-5 flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <label className="pl-1 text-sm font-medium text-white/80">Item title</label>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Item title"
-            className="input-style"
-          />
+          <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Item title" className="input-style" />
         </div>
 
         <div className="flex flex-col gap-1">
@@ -225,32 +217,16 @@ const AddItem = ({ setCurrentPage, user }) => {
           </div>
           <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Amount</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Amount"
-              className="input-style"
-            />
+            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" className="input-style" />
           </div>
           <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Amount sold</label>
-            <input
-              type="number"
-              value={sold}
-              onChange={(e) => setSold(e.target.value)}
-              placeholder="Amount sold"
-              className="input-style"
-            />
+            <input type="number" value={sold} onChange={(e) => setSold(e.target.value)} placeholder="Amount sold" className="input-style" />
           </div>
 
           <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Status</label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="input-style"
-              placeholder="Status">
+            <select value={status} onChange={(e) => setStatus(e.target.value)} className="input-style" placeholder="Status">
               <option>Unlisted</option>
               <option>Listed</option>
               <option>Sold out</option>

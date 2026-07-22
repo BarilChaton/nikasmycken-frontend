@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { initializeSortOrder } from '../utils/initializeSortOrder'
+
 import Welcome from '../components/welcome'
 import Feed from '../components/feed'
 import NavBar from '../components/navBar/navBar'
@@ -19,6 +21,12 @@ const Home = ({ user }) => {
   const [copying, setCopying] = useState(false)
 
   const [refresh, setRefresh] = useState(false)
+
+  useEffect(() => {
+    if (user.uid) {
+      initializeSortOrder(user.uid)
+    }
+  }, [user.uid])
 
   return (
     <div className={`h-dvh flex flex-col overflow-hidden lightModePrimaryBg`}>
