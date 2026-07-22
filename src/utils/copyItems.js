@@ -6,7 +6,7 @@ export const copyItems = async (items, userId) => {
     const copiedItems = items.map((item) => ({
       _type: 'inventoryItem',
       inventoryId: uuidv4(),
-      title: `${item.title} Copy`,
+      title: `${item.title}`,
       category: {
         _type: 'reference',
         _ref: item.category._id
