@@ -3,7 +3,7 @@ import CategoryManager from './CategoryManager'
 import AccountSettings from './accountSettings'
 import ImportExport from './importExport'
 
-const Settings = ({ setCurrentPage, user }) => {
+const Settings = ({ setCurrentPage, user, deletingAccount, setDeletingAccount }) => {
   return (
     <div className="h-full overflow-y-auto px-5 py-4 pb-24">
       {/* Header */}
@@ -22,7 +22,7 @@ const Settings = ({ setCurrentPage, user }) => {
           <h2 className="text-xl font-bold">Account</h2>
         </div>
 
-        <AccountSettings user={user} />
+        <AccountSettings user={user} deletingAccount={deletingAccount} setDeletingAccount={setDeletingAccount} />
       </div>
 
       {/* Category settings */}

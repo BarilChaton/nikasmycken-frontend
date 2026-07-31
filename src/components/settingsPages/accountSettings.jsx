@@ -1,12 +1,9 @@
-import { useState } from 'react'
 import { FiLogOut, FiMail, FiUser } from 'react-icons/fi'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { deleteAccount } from '../../utils/deleteAccount'
 
-const AccountSettings = ({ user }) => {
-  const [deleting, setDeleting] = useState(false)
-
+const AccountSettings = ({ user, deletingAccount, setDeletingAccount }) => {
   const handleLogout = async () => {
     const confirmed = window.confirm('Are you sure you want to log out?')
     if (!confirmed) return
@@ -26,7 +23,7 @@ const AccountSettings = ({ user }) => {
     if (!confirmed) return
 
     try {
-      setDeleting(true)
+      setDeletingAccount(true)
       await deleteAccount(user)
       alert('Your account has been deleted.')
     } catch (error) {
@@ -38,7 +35,7 @@ const AccountSettings = ({ user }) => {
       console.error(error)
       alert('Unable to delete account. Please log in again and try.')
     } finally {
-      setDeleting(false)
+      setDeletingAccount(false)
     }
   }
 
@@ -64,16 +61,19 @@ const AccountSettings = ({ user }) => {
       </div>
 
       <button
+        disabled={deletingAccount}
         onClick={handleLogout}
-        className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-red-500 py-3 font-semibold text-white transition hover:bg-red-600 active:scale-95">
+        className={`mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-red-500 py-3 font-semibold text-white transition ${
+          deletingAccount ? 'cursor-not-allowed bg-red-300' : 'bg-red-500 hover:bg-red-600 active:scale-95'
+        }`}>
         <FiLogOut />
         Sign out
       </button>
       <button
-        disabled={deleting}
+        disabled={deletingAccount}
         onClick={handleDeleteAccount}
         className={`mt-3 flex w-full items-center justify-center gap-2 rounded-xl py-3 font-semibold text-white transition ${
-          deleting ? 'cursor-not-allowed bg-red-300' : 'bg-red-500 hover:bg-red-600 active:scale-95'
+          deletingAccount ? 'cursor-not-allowed bg-red-300' : 'bg-red-500 hover:bg-red-600 active:scale-95'
         }`}>
         Delete Account
       </button>

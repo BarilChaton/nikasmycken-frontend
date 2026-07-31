@@ -12,7 +12,7 @@ import EditItem from '../components/editItem'
 import ItemDetails from '../components/itemDetails/itemDetails'
 import SelectionBar from '../components/selectionBar'
 
-const Home = ({ user }) => {
+const Home = ({ user, deletingAccount, setDeletingAccount }) => {
   const [currentPage, setCurrentPage] = useState('home')
   const [selectedItem, setSelectedItem] = useState(null)
 
@@ -57,7 +57,9 @@ const Home = ({ user }) => {
         )}
         {currentPage === 'add' && <AddItem setCurrentPage={setCurrentPage} user={user} />}
         {currentPage === 'statistics' && <Statistics setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} user={user} />}
-        {currentPage === 'settings' && <Settings setCurrentPage={setCurrentPage} user={user} />}
+        {currentPage === 'settings' && (
+          <Settings setCurrentPage={setCurrentPage} user={user} deletingAccount={deletingAccount} setDeletingAccount={setDeletingAccount} />
+        )}
         {currentPage === 'details' && (
           <ItemDetails item={selectedItem} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} user={user} />
         )}
