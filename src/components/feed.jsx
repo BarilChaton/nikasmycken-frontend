@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { client } from '../client'
 import { feedQuery, inventoryCountQuery } from '../utils/queries'
-import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
+import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 import { reorderItems } from '../utils/reorderItems'
 
@@ -14,6 +14,7 @@ const Feed = (props) => {
 
   const [items, setItems] = useState([])
   const [totalItems, setTotalItems] = useState(0)
+  const [activeItem, setActiveItem] = useState(null)
   const [loading, setLoading] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
   const [page, setPage] = useState(0)
@@ -101,8 +102,8 @@ const Feed = (props) => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        delay: 150,
-        tolerance: 8
+        delay: 250,
+        tolerance: 5
       }
     })
   )
@@ -137,7 +138,18 @@ const Feed = (props) => {
       </h2>
 
       <div className="grid grid-cols-1 gap-4">
-        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={({ active }) => {
+            const item = items.find((item) => item._id === active.id)
+            setActiveItem(item)
+          }}
+          onDragCancel={() => setActiveItem(null)}
+          onDragEnd={(event) => {
+            setActiveItem(null)
+            handleDragEnd(event)
+          }}>
           <SortableContext items={items.map((item) => item._id)} strategy={verticalListSortingStrategy}>
             {items.map((item) => (
               <FeedItem
@@ -152,6 +164,22 @@ const Feed = (props) => {
               />
             ))}
           </SortableContext>
+
+          <DragOverlay>
+            {activeItem && (
+              <div className="scale-105 opacity-90">
+                <FeedItem
+                  item={activeItem}
+                  setCurrentPage={setCurrentPage}
+                  setSelectedItem={setSelectedItem}
+                  selectionMode={false}
+                  setSelectionMode={setSelectionMode}
+                  selectedItems={selectedItems}
+                  setSelectedItems={setSelectedItems}
+                />
+              </div>
+            )}
+          </DragOverlay>
         </DndContext>
 
         {hasMore && (
