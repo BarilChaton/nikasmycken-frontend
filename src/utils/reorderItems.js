@@ -6,7 +6,7 @@ export const reorderItems = async (items) => {
   items.forEach((item, index) => {
     transaction.patch(item._id, {
       set: {
-        sortOrder: index
+        sortOrder: items.length - index - 1
       }
     })
   })

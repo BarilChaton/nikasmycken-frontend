@@ -1,4 +1,4 @@
-export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder asc) [$start...$end] {
+export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder desc) [$start...$end] {
     _id,
     inventoryId,
     title,
