@@ -36,6 +36,13 @@ export const deleteAccount = async (user) => {
       }
     )
 
+    const sanityUser = await client.fetch(
+      `*[_type == "user" && uid == $userId][0]._id`,
+      {
+        userId
+      }
+    )
+
     const transaction = client.transaction()
 
     items.forEach((item) => {
@@ -45,6 +52,10 @@ export const deleteAccount = async (user) => {
     categories.forEach((categoryId) => {
       transaction.delete(categoryId)
     })
+
+    if (sanityUser) {
+      transaction.delete(sanityUser)
+    }
 
     await transaction.commit()
 

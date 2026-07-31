@@ -18,7 +18,7 @@ export const googleLogin = async () => {
     return userCredential.user
 
   } catch (error) {
-    console.error("Google login failed:", error)
+    console.error('Google login failed:', error)
     throw error
   }
 }

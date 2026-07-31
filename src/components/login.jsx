@@ -32,7 +32,7 @@ const Login = () => {
       </div>
 
       {/* App title */}
-      <h1 className="text-4xl font-bold tracking-tight">Orvara</h1>
+      <h1 className="text-4xl font-bold tracking-tight">Inventlify</h1>
 
       {/* Description */}
       <p className="mt-3 max-w-xs text-center text-white/70">Organize. Track. Sell.</p>
@@ -47,9 +47,7 @@ const Login = () => {
       </button>
 
       {/* Footer text */}
-      <p className="mt-8 max-w-xs text-center text-xs text-white/40">
-        Your inventory is securely stored and synced with your account.
-      </p>
+      <p className="mt-8 max-w-xs text-center text-xs text-white/40">Your inventory is securely stored and synced with your account.</p>
     </div>
   )
 }

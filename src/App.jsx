@@ -4,10 +4,12 @@ import { useAuth } from './auth/AuthContext'
 import Login from './components/Login'
 import Home from './containers/home'
 import Spinner from './components/spinner'
+import Onboarding from './components/onboarding/onboarding'
+import AppShell from './containers/appShell'
 
 const App = () => {
   const [deletingAccount, setDeletingAccount] = useState(false)
-  const { user, loading } = useAuth()
+  const { user, sanityUser, loading, completeOnboarding } = useAuth()
 
   useEffect(() => {
     const lockOrientation = async () => {
@@ -20,15 +22,31 @@ const App = () => {
   }, [])
 
   if (loading) {
-    return <Spinner />
+    return (
+      <AppShell>
+        <Spinner />
+      </AppShell>
+    )
   }
 
   if (!user) {
-    return <Login />
+    return (
+      <AppShell>
+        <Login />
+      </AppShell>
+    )
+  }
+
+  if (!sanityUser.onboardingCompleted) {
+    return (
+      <AppShell>
+        <Onboarding user={sanityUser} completeOnboarding={completeOnboarding} />
+      </AppShell>
+    )
   }
 
   return (
-    <>
+    <AppShell>
       <Home user={user} deletingAccount={deletingAccount} setDeletingAccount={setDeletingAccount} />
 
       {deletingAccount && (
@@ -36,7 +54,7 @@ const App = () => {
           <Spinner message="Deleting account..." />
         </div>
       )}
-    </>
+    </AppShell>
   )
 }
 
