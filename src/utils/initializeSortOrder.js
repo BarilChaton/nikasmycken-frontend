@@ -2,7 +2,7 @@ import { client } from '../client'
 
 export const initializeSortOrder = async (userId) => {
   const items = await client.fetch(
-    `*[_type == "inventoryItem" && ownerId == $userId] | order(_createdAt asc) {
+    `*[_type == "inventoryItem" && ownerId == $userId] | order(_createdAt desc) {
       _id
     }`,
     {
