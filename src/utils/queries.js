@@ -1,4 +1,34 @@
-export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder asc) {
+export const feedQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder asc) [$start...$end] {
+    _id,
+    inventoryId,
+    title,
+    inventoryType,
+    category->{
+      _id,
+      name,
+      subcategories
+    },
+    subcategoryKey,
+    purchasePrice,
+    listingPrice,
+    status,
+    amount,
+    amountSold,
+
+    "image": photos[0].asset->url,
+
+    photos[]{
+      _key,
+      asset->{
+        _id,
+        url
+      }
+    },
+
+    _createdAt
+  } `
+
+export const statisticsQuery = `*[_type == "inventoryItem" && ownerId==$userId] | order(sortOrder asc) {
     _id,
     inventoryId,
     title,
@@ -101,4 +131,8 @@ export const categoriesQuery = `
           name
       }
   }
+`
+
+export const inventoryCountQuery = `
+  count(*[_type == "inventoryItem" && ownerId == $userId])
 `

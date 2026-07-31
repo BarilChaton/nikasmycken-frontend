@@ -20,7 +20,7 @@ const FeedItem = (props) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.7 : 1,
     zIndex: isDragging ? 10 : 1
   }
 
@@ -79,7 +79,7 @@ const FeedItem = (props) => {
       }}
       className={`cursor-pointer select-none flex gap-2 rounded-2xl p-2 shadow-md text-white transition-transform duration-200 ${
         isSelected ? 'bg-white/30' : 'bg-white/10'
-      }`}>
+      } ${isDragging ? 'scale-105 shadow-xl' : ''}`}>
       {selectionMode && (
         <div className="flex items-center px-2 text-white">{isSelected ? <FiCheckSquare size={24} /> : <FiSquare size={24} />}</div>
       )}

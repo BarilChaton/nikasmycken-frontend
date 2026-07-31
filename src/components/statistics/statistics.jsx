@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { client } from '../../client'
-import { feedQuery } from '../../utils/queries'
+import { statisticsQuery } from '../../utils/queries'
 import Spinner from '../spinner'
 
 import FinanceCard from './financeCard'
@@ -15,7 +15,7 @@ const Statistics = ({ setCurrentPage, setSelectedItem, user }) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery, { userId: user.uid })
+        const data = await client.fetch(statisticsQuery, { userId: user.uid })
         setItems(data)
       } catch (error) {
         console.error('Failed loading statistics:', error)

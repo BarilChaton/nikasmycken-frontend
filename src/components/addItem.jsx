@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 import { client } from '../client'
 import { categoriesQuery } from '../utils/queries'
+import { resizeImage } from '../utils/resizeImage'
 import Spinner from './Spinner'
 
 const AddItem = ({ setCurrentPage, user }) => {
@@ -35,7 +36,7 @@ const AddItem = ({ setCurrentPage, user }) => {
     const files = Array.from(e.target.files)
 
     if (!files.length) return
-    const acceptedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml']
+    const acceptedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp']
 
     const invalid = files.some((file) => !acceptedTypes.includes(file.type))
     if (invalid) {
@@ -46,7 +47,16 @@ const AddItem = ({ setCurrentPage, user }) => {
     setWrongImageType(false)
     setLoading(true)
 
-    Promise.all(files.map((file) => client.assets.upload('image', file, { contentType: file.type, filename: file.name })))
+    Promise.all(
+      files.map(async (file) => {
+        const compressed = await resizeImage(file)
+
+        return client.assets.upload('image', compressed, {
+          contentType: compressed.type,
+          filename: compressed.name
+        })
+      })
+    )
       .then((documents) => {
         setImageAssets((prev) => [...prev, ...documents])
       })

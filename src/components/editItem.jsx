@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { client } from '../client'
 import { categoriesQuery } from '../utils/queries'
+import { resizeImage } from '../utils/resizeImage'
 import { FiArrowLeft } from 'react-icons/fi'
 import { RiImageAddLine, RiDeleteBin2Fill } from 'react-icons/ri'
 
@@ -38,12 +39,14 @@ const EditItem = ({ item, setCurrentPage, user }) => {
       setUploading(true)
 
       const uploads = await Promise.all(
-        files.map((file) =>
-          client.assets.upload('image', file, {
-            contentType: file.type,
-            filename: file.name
+        files.map(async (file) => {
+          const compressed = await resizeImage(file)
+
+          return client.assets.upload('image', compressed, {
+            contentType: compressed.type,
+            filename: compressed.name
           })
-        )
+        })
       )
 
       const newPhotos = uploads.map((image) => ({
@@ -145,9 +148,7 @@ const EditItem = ({ item, setCurrentPage, user }) => {
           {photos.map((photo) => (
             <div key={photo._key} className="relative">
               <img src={photo.previewUrl || photo.asset.url} alt="" className="h-24 w-full rounded-xl object-cover" />
-              <button
-                onClick={() => removeImage(photo._key)}
-                className="absolute right-1 top-1 rounded-full bg-white p-1 text-red-500">
+              <button onClick={() => removeImage(photo._key)} className="absolute right-1 top-1 rounded-full bg-white p-1 text-red-500">
                 <RiDeleteBin2Fill />
               </button>
             </div>
@@ -223,13 +224,7 @@ const EditItem = ({ item, setCurrentPage, user }) => {
 
           <div className="flex flex-col gap-1">
             <label className="pl-1 text-sm font-medium text-white/80">Amount</label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="input-style"
-              placeholder="Amount"
-            />
+            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="input-style" placeholder="Amount" />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -253,10 +248,7 @@ const EditItem = ({ item, setCurrentPage, user }) => {
           </select>
         </div>
 
-        <button
-          onClick={updateItem}
-          disabled={saving}
-          className="rounded-xl bg-white py-3 font-bold text-sky-800 disabled:opacity-50">
+        <button onClick={updateItem} disabled={saving} className="rounded-xl bg-white py-3 font-bold text-sky-800 disabled:opacity-50">
           {saving ? 'Saving...' : 'Save Changes'}
         </button>
       </div>
