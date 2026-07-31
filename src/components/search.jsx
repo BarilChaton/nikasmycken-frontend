@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { FiArrowLeft, FiSearch } from 'react-icons/fi'
 import { client } from '../client'
-import { feedQuery } from '../utils/queries'
+import { statisticsQuery } from '../utils/queries'
 
 import Spinner from './spinner'
 import FeedItem from './feedItem'
@@ -18,7 +18,7 @@ const Search = (props) => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const data = await client.fetch(feedQuery, { userId: user.uid })
+        const data = await client.fetch(statisticsQuery, { userId: user.uid })
         setItems(data)
       } catch (error) {
         console.error(error)
