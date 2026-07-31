@@ -13,8 +13,6 @@ export const googleReauthenticate = async (user) => {
 
   const platform = window.Capacitor?.getPlatform()
 
-  console.log('Platform:', platform)
-
   if (platform === 'android' || platform === 'ios') {
 
     const result = await GoogleSignIn.signIn()

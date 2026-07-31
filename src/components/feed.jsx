@@ -47,8 +47,6 @@ const Feed = (props) => {
           setTotalItems(count)
         }
 
-        console.log(data.length)
-
         if (reset) {
           setItems(data)
           setPage(1)
