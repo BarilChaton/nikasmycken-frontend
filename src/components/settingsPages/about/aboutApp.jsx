@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FiArrowLeft, FiShield, FiFileText } from 'react-icons/fi'
 import { TERMS_VERSION, PRIVACY_VERSION } from '../../../data/legal/legalVersions'
+import { APP_VERSION } from '../../../config/app'
 
 const AboutApp = ({ setCurrentPage }) => {
   return (
@@ -57,7 +58,7 @@ const AboutApp = ({ setCurrentPage }) => {
       <div className="mt-auto pt-10 text-center text-sm text-white/50">
         <p className="font-semibold text-white/70">Catalogify</p>
 
-        <p>Version 1.0.0</p>
+        <p>Version {APP_VERSION}</p>
 
         <p className="mt-2">Made with ❤️ in Sweden</p>
 
