@@ -43,7 +43,7 @@ const PrivacyStep = ({ user, onNext, disabled }) => {
 
       <h1 className="mb-3 text-2xl font-bold text-white">{privacyPolicy.title}</h1>
 
-      <p className="mb-5 text-sm text-white/70">Please review how Inventlify handles your information.</p>
+      <p className="mb-5 text-sm text-white/70">Please review how Inventorify handles your information.</p>
 
       <div className="mb-5 max-h-48 overflow-y-auto rounded-xl bg-black/20 p-4 text-left text-sm text-white/70">
         {privacyPolicy.sections.map((section, index) => (
@@ -58,7 +58,7 @@ const PrivacyStep = ({ user, onNext, disabled }) => {
       <label className="mb-6 flex cursor-pointer items-start gap-3 text-left text-sm text-white/80">
         <input type="checkbox" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} className="mt-1 h-4 w-4" />
 
-        <span>I have read and agree to the Inventlify Privacy Policy.</span>
+        <span>I have read and agree to the Inventorify Privacy Policy.</span>
       </label>
 
       <button

@@ -32,7 +32,7 @@ const Login = () => {
       </div>
 
       {/* App title */}
-      <h1 className="text-4xl font-bold tracking-tight">Inventlify</h1>
+      <h1 className="text-4xl font-bold tracking-tight">Inventorify</h1>
 
       {/* Description */}
       <p className="mt-3 max-w-xs text-center text-white/70">Organize. Track. Sell.</p>
