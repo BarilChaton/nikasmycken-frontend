@@ -20,7 +20,7 @@ const CompletionStep = ({ completeOnboarding, categories }) => {
       <h1 className="mb-3 text-2xl font-bold text-white">You are ready!</h1>
 
       <p className="mb-6 text-white/70">
-        Your Inventorify workspace has been created. You can now start adding and managing your inventory.
+        Your Catalogify workspace has been created. You can now start adding and managing your inventory.
       </p>
 
       {categories?.length > 0 && (
@@ -39,7 +39,7 @@ const CompletionStep = ({ completeOnboarding, categories }) => {
       )}
 
       <button onClick={completeOnboarding} className="w-full rounded-xl bg-white py-3 font-bold text-sky-800 transition active:scale-95">
-        Start using Inventorify
+        Start using Catalogify
       </button>
     </motion.div>
   )

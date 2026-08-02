@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <resources>
-    <string name="app_name">Inventorify</string>
-    <string name="title_activity_main">Inventorify</string>
+    <string name="app_name">Catalogify</string>
+    <string name="title_activity_main">Catalogify</string>
     <string name="package_name">com.nikasmycken.app</string>
     <string name="custom_url_scheme">com.nikasmycken.app</string>
     <string name="server_client_id">644958193282-b12mhm0lnh0bdltqgi0ilo1ngpi5s3sr.apps.googleusercontent.com</string>

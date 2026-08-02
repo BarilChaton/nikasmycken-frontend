@@ -19,7 +19,7 @@ const WelcomeStep = ({ onNext }) => {
         <FaBoxOpen size={60} />
       </motion.div>
 
-      <h1 className="mb-3 text-3xl font-bold text-white">Welcome to Inventorify</h1>
+      <h1 className="mb-3 text-3xl font-bold text-white">Welcome to Catalogify</h1>
 
       <p className="mb-8 text-white/70">Let's set up your inventory and personalize your experience.</p>
 

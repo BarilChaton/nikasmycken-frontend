@@ -43,7 +43,7 @@ const LicenseStep = ({ user, onNext, disabled }) => {
 
       <h1 className="mb-3 text-2xl font-bold text-white">{termsOfService.title}</h1>
 
-      <p className="mb-5 text-sm text-white/70">Please review and accept the Inventorify terms before continuing.</p>
+      <p className="mb-5 text-sm text-white/70">Please review and accept the Catalogify terms before continuing.</p>
 
       <div className="mb-5 max-h-48 overflow-y-auto rounded-xl bg-black/20 p-4 text-left text-sm text-white/70">
         {termsOfService.sections.map((section, index) => (
@@ -58,7 +58,7 @@ const LicenseStep = ({ user, onNext, disabled }) => {
       <label className="mb-6 flex cursor-pointer items-start gap-3 text-left text-sm text-white/80">
         <input type="checkbox" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} className="mt-1 h-4 w-4" />
 
-        <span>I have read and agree to the Inventorify Terms of Service.</span>
+        <span>I have read and agree to the Catalogify Terms of Service.</span>
       </label>
 
       <button
