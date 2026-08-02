@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import WelcomeStep from './WelcomeStep'
-import CategoryStep from './CategoryStep'
-import LicenseStep from './LicenseStep'
-import PrivacyStep from './PrivacyStep'
-import CompletionStep from './CompletionStep'
+const WelcomeStep = lazy(() => import('./welcomeStep'))
+const LicenseStep = lazy(() => import('./licenseStep'))
+const PrivacyStep = lazy(() => import('./privacyStep'))
+const CategoryStep = lazy(() => import('./categoryStep'))
+const CompletionStep = lazy(() => import('./completionStep'))
 
 const Onboarding = ({ user, completeOnboarding }) => {
   const [step, setStep] = useState(0)
@@ -15,11 +15,11 @@ const Onboarding = ({ user, completeOnboarding }) => {
   }
 
   const steps = [
-    () => <WelcomeStep onNext={nextStep} />,
-    () => <LicenseStep user={user} onNext={nextStep} />,
-    () => <PrivacyStep user={user} onNext={nextStep} />,
-    () => <CategoryStep user={user} categories={categories} setCategories={setCategories} onNext={nextStep} />,
-    () => <CompletionStep completeOnboarding={completeOnboarding} categories={categories} />
+    <WelcomeStep onNext={nextStep} />,
+    <LicenseStep user={user} onNext={nextStep} />,
+    <PrivacyStep user={user} onNext={nextStep} />,
+    <CategoryStep user={user} categories={categories} setCategories={setCategories} onNext={nextStep} />,
+    <CompletionStep completeOnboarding={completeOnboarding} categories={categories} />
   ]
 
   const CurrentStep = steps[step]
@@ -32,7 +32,9 @@ const Onboarding = ({ user, completeOnboarding }) => {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -50 }}
         className="flex h-dvh w-full items-center justify-center px-5 py-6">
-        <CurrentStep />
+        <Suspense fallback={<div className="text-white">Loading...</div>}>
+          <CurrentStep />
+        </Suspense>
       </motion.div>
     </AnimatePresence>
   )
