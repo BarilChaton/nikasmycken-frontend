@@ -53,9 +53,15 @@ export const termsOfService = {
         'We may update these Terms of Service from time to time. Continued use of Catalogify after changes are made means that you accept the updated terms.'
     },
     {
+      title: 'Service Provider',
+      text:
+        'Catalogify is operated by Karl Christian Karlsson, Sweden. ' +
+        'By using Catalogify, you agree to these Terms of Service.'
+    },
+    {
       title: 'Contact',
       text:
-        'If you have questions regarding these terms or the application, please contact the Catalogify support team.'
+        'If you have questions regarding these terms or the application, please contact the service provider.'
     }
   ]
 }

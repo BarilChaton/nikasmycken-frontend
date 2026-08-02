@@ -8,6 +8,13 @@ export const privacyPolicy = {
         'Catalogify respects your privacy and is committed to protecting your personal information. This Privacy Policy explains what information is collected, how it is used, and how it is protected when you use the application.'
     },
     {
+      title: 'Data Controller',
+      text:
+        'Catalogify is operated by Karl Christian Karlsson, based in Sweden. ' +
+        'For questions regarding your personal data, privacy, or this Privacy Policy, ' +
+        'please contact us at support@catalogify.app.'
+    },
+    {
       title: 'Information We Collect',
       text:
         'When you use Catalogify, we may collect information connected to your account, including your name, email address, profile picture, inventory data, categories, and images you upload.'

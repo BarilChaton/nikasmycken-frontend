@@ -57,12 +57,15 @@ const AboutApp = ({ setCurrentPage }) => {
       {/* Footer */}
       <div className="mt-auto pt-10 text-center text-sm text-white/50">
         <p className="font-semibold text-white/70">Catalogify</p>
-
         <p>Version {APP_VERSION}</p>
-
         <p className="mt-2">Made with ❤️ in Sweden</p>
 
         <p className="mt-2">© {new Date().getFullYear()} Catalogify</p>
+        <div className="mt-4 space-y-1 text-xs text-white/40">
+          <p>Operator: Karl Christian Karlsson Korbacz</p>
+          <p>Sweden</p>
+          <p>Contact: support.catalogify@gmail.com</p>
+        </div>
       </div>
     </motion.div>
   )
