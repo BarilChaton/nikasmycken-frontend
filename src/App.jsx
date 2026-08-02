@@ -5,11 +5,12 @@ import Login from './components/Login'
 import Home from './containers/home'
 import Spinner from './components/spinner'
 import Onboarding from './components/onboarding/onboarding'
+import LegalUpdate from './components/legalUpdate'
 import AppShell from './containers/appShell'
 
 const App = () => {
   const [deletingAccount, setDeletingAccount] = useState(false)
-  const { user, sanityUser, loading, completeOnboarding } = useAuth()
+  const { user, sanityUser, loading, completeOnboarding, requiresLegalUpdate } = useAuth()
 
   useEffect(() => {
     const lockOrientation = async () => {
@@ -33,6 +34,14 @@ const App = () => {
     return (
       <AppShell>
         <Login />
+      </AppShell>
+    )
+  }
+
+  if (requiresLegalUpdate) {
+    return (
+      <AppShell>
+        <LegalUpdate />
       </AppShell>
     )
   }

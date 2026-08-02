@@ -5,7 +5,7 @@ import { client } from '../../client'
 import { privacyPolicy } from '../../data/legal/privacyPolicy.js'
 import { PRIVACY_VERSION } from '../../data/legal/legalVersions'
 
-const PrivacyStep = ({ user, onNext }) => {
+const PrivacyStep = ({ user, onNext, disabled }) => {
   const [accepted, setAccepted] = useState(false)
   const [saving, setSaving] = useState(false)
 
@@ -62,7 +62,7 @@ const PrivacyStep = ({ user, onNext }) => {
       </label>
 
       <button
-        disabled={!accepted || saving}
+        disabled={!accepted || saving || disabled}
         onClick={acceptPrivacy}
         className={`w-full rounded-xl py-3 font-bold transition ${
           accepted && !saving ? 'bg-white text-sky-800 active:scale-95' : 'cursor-not-allowed bg-white/30 text-white/50'
