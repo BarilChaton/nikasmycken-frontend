@@ -11,6 +11,9 @@ import Settings from '../components/settingsPages/settings'
 import EditItem from '../components/editItem'
 import ItemDetails from '../components/itemDetails/itemDetails'
 import SelectionBar from '../components/selectionBar'
+import AboutApp from '../components/settingsPages/about/aboutApp'
+import PrivacyViewer from '../components/settingsPages/about/privacyViewer'
+import TermsViewer from '../components/settingsPages/about/termsViewer'
 
 const Home = ({ user, deletingAccount, setDeletingAccount }) => {
   const [currentPage, setCurrentPage] = useState('home')
@@ -60,6 +63,9 @@ const Home = ({ user, deletingAccount, setDeletingAccount }) => {
         {currentPage === 'settings' && (
           <Settings setCurrentPage={setCurrentPage} user={user} deletingAccount={deletingAccount} setDeletingAccount={setDeletingAccount} />
         )}
+        {currentPage === 'about' && <AboutApp setCurrentPage={setCurrentPage} />}
+        {currentPage === 'terms' && <TermsViewer />}
+        {currentPage === 'privacy' && <PrivacyViewer />}
         {currentPage === 'details' && (
           <ItemDetails item={selectedItem} setCurrentPage={setCurrentPage} setSelectedItem={setSelectedItem} user={user} />
         )}

@@ -1,4 +1,4 @@
-import { FiArrowLeft, FiTag, FiUser, FiDownload } from 'react-icons/fi'
+import { FiArrowLeft, FiTag, FiUser, FiDownload, FiInfo } from 'react-icons/fi'
 import CategoryManager from './CategoryManager'
 import AccountSettings from './accountSettings'
 import ImportExport from './importExport'
@@ -43,6 +43,26 @@ const Settings = ({ setCurrentPage, user, deletingAccount, setDeletingAccount })
         </div>
 
         <ImportExport user={user} />
+      </div>
+
+      {/* About page */}
+      <div className="rounded-2xl bg-white/10 p-5 text-white mb-5">
+        <div className="mb-4 flex items-center gap-3">
+          <FiInfo size={24} />
+          <h2 className="text-xl font-bold">About</h2>
+        </div>
+
+        <button
+          onClick={() => setCurrentPage('about')}
+          className="flex w-full items-center justify-between rounded-xl bg-white/10 p-4 transition active:scale-95">
+          <div className="text-left">
+            <p className="font-semibold">About Catalogify</p>
+
+            <p className="text-sm text-white/60">App information, Terms of Service and Privacy Policy</p>
+          </div>
+
+          <span className="text-white/60">→</span>
+        </button>
       </div>
     </div>
   )
