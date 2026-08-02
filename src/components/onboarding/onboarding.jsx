@@ -15,11 +15,11 @@ const Onboarding = ({ user, completeOnboarding }) => {
   }
 
   const steps = [
-    <WelcomeStep onNext={nextStep} />,
-    <LicenseStep user={user} onNext={nextStep} />,
-    <PrivacyStep user={user} onNext={nextStep} />,
-    <CategoryStep user={user} categories={categories} setCategories={setCategories} onNext={nextStep} />,
-    <CompletionStep completeOnboarding={completeOnboarding} categories={categories} />
+    () => <WelcomeStep onNext={nextStep} />,
+    () => <LicenseStep user={user} onNext={nextStep} />,
+    () => <PrivacyStep user={user} onNext={nextStep} />,
+    () => <CategoryStep user={user} categories={categories} setCategories={setCategories} onNext={nextStep} />,
+    () => <CompletionStep completeOnboarding={completeOnboarding} categories={categories} />
   ]
 
   const CurrentStep = steps[step]
