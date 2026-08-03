@@ -77,7 +77,7 @@ const AddItem = ({ setCurrentPage, user }) => {
       return
     }
 
-    if (!title || !categoryId || !subcategoryKey || imageAssets.length === 0) {
+    if (!title || !categoryId || imageAssets.length === 0) {
       setFields(true)
 
       setTimeout(() => {
@@ -142,7 +142,7 @@ const AddItem = ({ setCurrentPage, user }) => {
 
         <label
           className={`flex h-40 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/30 text-white 
-          ${loading ? 'pointer-events-none opacity-50}' : 'cursor-pointer'}`}>
+          ${loading ? 'pointer-events-none opacity-50' : 'cursor-pointer'}`}>
           <RiImageAddLine size={40} />
           <span>Add Photos</span>
           <input type="file" multiple accept="image/*" onChange={uploadImage} className="hidden" />
@@ -187,14 +187,16 @@ const AddItem = ({ setCurrentPage, user }) => {
           </select>
         </div>
 
-        {selectedCategory && (
+        {selectedCategory?.subcategories?.length > 0 && (
           <div className="flex flex-col gap-1">
-            <label className="pl-1 text-sm font-medium text-white/80">Subcategory</label>
+            <label className="pl-1 text-sm font-medium text-white/80">
+              Subcategory <span className="font-normal text-white/50">(optional)</span>
+            </label>
 
             <select value={subcategoryKey} onChange={(e) => setSubcategoryKey(e.target.value)} className="input-style">
-              <option value="">Select subcategory</option>
+              <option value="">No subcategory</option>
 
-              {selectedCategory.subcategories?.map((subcategory) => (
+              {selectedCategory.subcategories.map((subcategory) => (
                 <option key={subcategory._key} value={subcategory._key} className="text-sky-700">
                   {subcategory.name}
                 </option>
