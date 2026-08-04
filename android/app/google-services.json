@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "644958193282-v5om7cib015abqo1d98trbphahgem8hg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nikasmycken.app",
+            "certificate_hash": "bc9ccd51bb3b0f12abd659a5baf39c675e99dd93"
+          }
+        },
+        {
           "client_id": "644958193282-jf6mimj5a983su80nhods4uas2q7aoon.apps.googleusercontent.com",
           "client_type": 3
         }
